@@ -1,0 +1,11 @@
+Controller\UpdateStaffController.class
+Controller\StaffDetailController.class
+DAO\StaffDAO.class
+Controller\LogoutController.class
+Controller\ViewStaffAccountController.class
+Model\Customers.class
+Model\Staffs.class
+Controller\AddStaffController.class
+Controller\BlockStaffAccountController.class
+DBContext\DBContext.class
+Controller\LoginController.class
