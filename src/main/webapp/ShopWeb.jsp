@@ -532,7 +532,7 @@
         <!-- Header Section -->
         <div class="header">
             <div class="logo">
-                <a href="bookShopController">
+                <a href="ViewBookCustomerController">
                     <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
                 </a>
             </div>
@@ -542,6 +542,10 @@
             <c:choose>
     <c:when test="${not empty sessionScope.account}">
         <form method="post" class="logsign">
+             <form method="post" class="logsign">
+            <form action="ProfileController" method="get">
+        <button type="submit" class="btn btn-primary">View Profile</button>
+    </form>
             <a href="newBookController">New</a>
             <a href="hotBookController" class="hot">Hot</a>
             <a href="randomBookController">Random</a>
@@ -554,7 +558,7 @@
             <a href="./LoginForm.jsp" class="login">Log in</a>
             <a href="./SigninForm.jsp" class="signin">Sign up</a>
         </form>
-        <form method="post" class="logsign">
+       
             <a href="newBookController">New</a>
             <a href="hotBookController" class="hot">Hot</a>
             <a href="randomBookController">Random</a>

@@ -12,7 +12,7 @@ public class Staffs {
     private String StaffID;
     private String StaffName;
     private String StaffEmail;
-    private int StaffPNB;
+    private String StaffPNB;
     private String StaffAddress;
     private String Username;
     private String Password;
@@ -22,7 +22,7 @@ public class Staffs {
     public Staffs() {
     }
 
-    public Staffs(String StaffID, String StaffName, String StaffEmail, int StaffPNB, String StaffAddress, String Username, String Password, String Role, String Status) {
+    public Staffs(String StaffID, String StaffName, String StaffEmail, String StaffPNB, String StaffAddress, String Username, String Password, String Role, String Status) {
         this.StaffID = StaffID;
         this.StaffName = StaffName;
         this.StaffEmail = StaffEmail;
@@ -58,11 +58,11 @@ public class Staffs {
         this.StaffEmail = StaffEmail;
     }
 
-    public int getStaffPNB() {
+    public String getStaffPNB() {
         return StaffPNB;
     }
 
-    public void setStaffPNB(int StaffPNB) {
+    public void setStaffPNB(String StaffPNB) {
         this.StaffPNB = StaffPNB;
     }
 

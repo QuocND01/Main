@@ -66,7 +66,7 @@ public class StaffDAO extends DBContext{
             String pass = rs.getString("Password");
             String name = rs.getString("Name");
             String address = rs.getString("Address");
-            int phone = rs.getInt("Phone");
+            String phone = rs.getString("Phone");
             
             if ("Staff".equalsIgnoreCase(userType)) {
                 Staffs staff = new Staffs();
@@ -119,7 +119,7 @@ public class StaffDAO extends DBContext{
             staff.setRole(rs.getString("Role"));
             staff.setStaffName(rs.getString("StaffName"));
             staff.setStaffAddress(rs.getString("StaffAddress"));
-            staff.setStaffPNB(rs.getInt("StaffPNB"));
+            staff.setStaffPNB(rs.getString("StaffPNB"));
             staff.setStaffEmail(rs.getString("StaffEmail"));
             staff.setStatus(rs.getString("Status"));
             list.add(staff);
@@ -144,7 +144,7 @@ public class StaffDAO extends DBContext{
                     rs.getString("StaffID"),
                     rs.getString("StaffName"),
                     rs.getString("StaffEmail"),
-                    rs.getInt("StaffPNB"),
+                    rs.getString("StaffPNB"),
                     rs.getString("StaffAddress"),
                     rs.getString("Username"),
                     rs.getString("Password"),
@@ -200,7 +200,7 @@ public class StaffDAO extends DBContext{
             ps.setString(5, staff.getStaffName());
             ps.setString(6, staff.getStaffEmail());
             ps.setString(7, staff.getStaffAddress());
-            ps.setInt(8, staff.getStaffPNB());
+            ps.setString(8, staff.getStaffPNB());
             ps.setString(9, staff.getStatus());
             int rows = ps.executeUpdate();
             if(rows > 0){
@@ -241,7 +241,7 @@ public class StaffDAO extends DBContext{
         ps.setString(3, staff.getStaffName());
         ps.setString(4, staff.getStaffEmail());
         ps.setString(5, staff.getStaffAddress());
-        ps.setInt(6, staff.getStaffPNB());
+        ps.setString(6, staff.getStaffPNB());
         ps.setString(7, staff.getStatus());
         ps.setString(8, staff.getStaffID());
         int rows = ps.executeUpdate();

@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Customer;
+import Model.Customers;
 
 /**
  *
@@ -61,16 +61,13 @@ public class ProfileController extends HttpServlet {
     throws ServletException, IOException {
         // Lấy CustomerID từ session, nếu không có thì sử dụng ID mẫu "C002"
         HttpSession session = request.getSession();
-        String customerID = (String) session.getAttribute("customerID");
+        String customerID = (String) session.getAttribute("CustomerID");
 
-        // Nếu không có customerID trong session, sử dụng ID mẫu "C002"
-        if (customerID == null || customerID.isEmpty()) {
-            customerID = "C2";  // ID mẫu
-        }
+        
 
         // Tạo đối tượng CustomerDAO để lấy dữ liệu từ cơ sở dữ liệu
         CustomerDAO customerDAO = new CustomerDAO();
-        Customer customer = customerDAO.getCustomerByID(customerID);
+        Customers customer = customerDAO.getCustomerByID(customerID);
 
         // Đưa đối tượng customer vào request để chuyển tới JSP
         if (customer != null) {

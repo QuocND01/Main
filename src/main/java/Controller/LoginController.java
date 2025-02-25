@@ -90,7 +90,6 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         
         HttpSession session = request.getSession();
         session.setAttribute("account", account);
-
         if (account instanceof Staffs) {
             Staffs staff = (Staffs) account;
             String role = staff.getRole(); 

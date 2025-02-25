@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import static jdk.internal.agent.Agent.error;
-import model.Customer;
+import Model.Customers;
 
 /**
  *
@@ -158,7 +158,7 @@ public class RegisterController extends HttpServlet {
 
         // Tạo tài khoản mới
         // Tạo đối tượng Customer mới với ID vừa tạo
-        Customer newCustomer = new Customer(newCustomerID, customerName, customerEmail, customerPNB, 
+        Customers newCustomer = new Customers(newCustomerID, customerName, customerEmail, customerPNB, 
                                             customerAddress, username, password, "Active");
         customerDAO.createCustomer(newCustomer);
         session.setAttribute("successMessage", "Customer created successfully! You can now log in.");

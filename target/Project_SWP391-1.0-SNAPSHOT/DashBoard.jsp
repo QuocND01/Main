@@ -138,10 +138,10 @@
             <form action="viewNewOrderController" method="post">
                 <button type="submit" class="btn">New Orders</button>
             </form>
-            <form action="viewAllOrderController" method="post">
+            <form action="ViewListCustomersController" method="get">
                 <button type="submit" class="btn">All Customer</button>
             </form>
-            <form action="allAccountController" method="post">
+            <form action="viewstaff" method="post">
                 <button type="submit" class="btn">All Staff</button>
             </form>
         </div>
