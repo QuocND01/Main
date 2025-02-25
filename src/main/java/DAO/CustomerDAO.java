@@ -5,10 +5,12 @@
 package DAO;
 
 import DBContext.DBContext;
+import Model.Customers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.Customer;
+import Model.Customers;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,13 +18,13 @@ import model.Customer;
  */
 public class CustomerDAO extends DBContext {
 
-    public Customer getCustomerByID(String customerID) {
+    public Customers getCustomerByID(String customerID) {
         String query = "SELECT * FROM Customers WHERE CustomerID = ?";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, customerID);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Customer(
+                    return new Customers(
                             rs.getString("CustomerID"),
                             rs.getString("CustomerName"),
                             rs.getString("CustomerEmail"),
@@ -40,14 +42,14 @@ public class CustomerDAO extends DBContext {
         return null;
     }
 
-    public Customer checkCustomerExist(String username) {
+    public Customers checkCustomerExist(String username) {
         String sql = "SELECT * FROM [dbo].[Customers] WHERE [Username] = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                Customer acc = new Customer(
+                Customers acc = new Customers(
                         rs.getString("CustomerID"),
                         rs.getString("CustomerName"),
                         rs.getString("CustomerEmail"),
@@ -67,7 +69,7 @@ public class CustomerDAO extends DBContext {
         return null;
     }
 
-    public void createCustomer(Customer acc) {
+    public void createCustomer(Customers acc) {
         String sql = "INSERT INTO Customers VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -87,7 +89,7 @@ public class CustomerDAO extends DBContext {
     }
 
     public String getNextCustomerID() {
-        String maxID = "C000"; // ID mặc định nếu không có dữ liệu
+        String maxID = "C0"; // ID mặc định nếu không có dữ liệu
         String query = "SELECT MAX(CustomerID) FROM Customers";
 
         try ( PreparedStatement ps = connection.prepareStatement(query);  ResultSet rs = ps.executeQuery()) {
@@ -100,22 +102,20 @@ public class CustomerDAO extends DBContext {
             e.printStackTrace();
         }
 
-        // Tăng ID lên 1 (C001, C002, C003,...)
         return generateNextID(maxID);
     }
 
-    // 
     private String generateNextID(String maxID) {
         // Lấy phần số từ ID (bỏ "C")
         int num = Integer.parseInt(maxID.substring(1));
         num++; // Tăng lên 1
 
-        // Định dạng lại ID (C001, C002, ...)
-        return String.format("C%03d", num);
+        // Định dạng lại ID (C1, C2, C3, ...)
+        return "C" + num;
     }
 
     // Hàm cập nhật thông tin của Customer
-    public boolean updateCustomer(Customer customer) {
+    public boolean updateCustomer(Customers customer) {
         String updateQuery = "UPDATE Customers SET CustomerName = ?, CustomerEmail = ?, CustomerPNB = ?, CustomerAddress = ? WHERE CustomerID = ?";
 
         try ( PreparedStatement ps = connection.prepareStatement(updateQuery)) {
@@ -132,5 +132,88 @@ public class CustomerDAO extends DBContext {
         }
         return false;  // Trả về false nếu không có bản ghi nào được cập nhật
     }
+    
+    // Lấy danh sách tất cả khách hàng
+    public ArrayList<Customers> getAllCustomers() {
+        ArrayList<Customers> list = new ArrayList<>();
+        String sql = "SELECT * FROM Customers";
 
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Customers cus = new Customers();
+                cus.setCustomerID(rs.getString("CustomerID"));
+                cus.setCustomerName(rs.getString("CustomerName"));
+                cus.setCustomerEmail(rs.getString("CustomerEmail"));
+                cus.setCustomerPNB(rs.getString("CustomerPNB"));
+                cus.setCustomerAddress(rs.getString("CustomerAddress"));
+                cus.setUsername(rs.getString("Username"));
+                cus.setPassword(rs.getString("Password"));
+                cus.setStatus(rs.getString("Status"));
+                list.add(cus);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Lấy thông tin chi tiết khách hàng theo ID
+    public Customers getCustomerById(String id) {
+        Customers cus = null;
+        String sql = "SELECT * FROM Customers WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                cus = new Customers();
+                cus.setCustomerID(rs.getString("CustomerID"));
+                cus.setCustomerName(rs.getString("CustomerName"));
+                cus.setCustomerEmail(rs.getString("CustomerEmail"));
+                cus.setCustomerPNB(rs.getString("CustomerPNB"));
+                cus.setCustomerAddress(rs.getString("CustomerAddress"));
+                cus.setUsername(rs.getString("Username"));
+                cus.setPassword(rs.getString("Password"));
+                cus.setStatus(rs.getString("Status"));
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cus;
+    }
+
+    // Khóa tài khoản khách hàng (Locked)
+    public void lockCustomer(String id) {
+        String sql = "UPDATE Customers SET Status = 'Locked' WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Mở khóa tài khoản khách hàng (Active)
+    public void unlockCustomer(String id) {
+        String sql = "UPDATE Customers SET Status = 'Active' WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

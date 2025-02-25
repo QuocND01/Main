@@ -88,19 +88,19 @@ public class UpdateStaffController extends HttpServlet {
         String password = request.getParameter("password");
         String status = request.getParameter("status");
 
-        int staffPNB = 0;
-        try {
-            staffPNB = Integer.parseInt(staffPNBStr);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        //String staffPNB = "";
+//        try {
+//            staffPNB = Integer.parseInt(staffPNBStr);
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//        }
         
         Staffs staff = new Staffs();
         staff.setStaffID(staffID);
         staff.setStaffName(staffName);
         staff.setStaffEmail(staffEmail);
         staff.setStaffAddress(staffAddress);
-        staff.setStaffPNB(staffPNB);
+        staff.setStaffPNB(staffPNBStr);
         staff.setUsername(username);
         staff.setPassword(password);
         staff.setStatus(status);

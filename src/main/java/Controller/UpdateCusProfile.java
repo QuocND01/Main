@@ -13,7 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Customer;
+import Model.Customers;
 
 /**
  *
@@ -80,7 +80,7 @@ public class UpdateCusProfile extends HttpServlet {
         String customerAddress = request.getParameter("CustomerAddress");
 
         // Tạo đối tượng Customer với thông tin mới
-        Customer customer = new Customer();
+        Customers customer = new Customers();
         customer.setCustomerID(customerID);
         customer.setCustomerName(customerName);
         customer.setCustomerEmail(customerEmail);

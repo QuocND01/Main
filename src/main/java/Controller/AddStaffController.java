@@ -102,7 +102,7 @@ public class AddStaffController extends HttpServlet {
         staff.setStaffName(staffName);
         staff.setStaffEmail(staffEmail);
         staff.setStaffAddress(staffAddress);
-        staff.setStaffPNB(staffPNB);
+        staff.setStaffPNB(staffPNBStr);
         staff.setStatus(status);
 
         boolean added = staffDAO.addStaff(staff);

@@ -1,6 +1,6 @@
 Controller\ViewBookCustomerController.class
 DBContext\DBContext.class
 DAO\CategoryDAO.class
-DAO\BookDAO.class
 Model\Categorys.class
 Model\Books.class
+DAO\BookDAO.class
