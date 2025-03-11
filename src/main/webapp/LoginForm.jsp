@@ -139,6 +139,25 @@
                 background-color: #ff9933;
                 color: white;
             }
+
+            .forgot-password a {
+                color: #007BFF;
+                text-decoration: none;
+            }
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+
+            .forgot-password {
+                margin-top: 15px;
+            }
+            
+            .success-message {
+            color: green;
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0;
+        }
         </style>
 
         <!-- JavaScript to show/hide password -->
@@ -151,41 +170,49 @@
         </script>
     </head>
     <body>
-    <!-- Video Background -->
-    <video class="video-bg" autoplay muted loop>
-        <source src="<c:url value='/vid/login1.mp4'/>" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+        <!-- Video Background -->
+        <video class="video-bg" autoplay muted loop>
+            <source src="<c:url value='/vid/login1.mp4'/>" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-    <!-- Login Form -->
-    <form action="login" method="post">
-        <div class="logo">
-            <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
-        </div>
-        <h2>Login</h2>
-
-        <label for="name">Username:</label>
-        <input type="text" name="name" placeholder="Enter your username" id="name" value="<c:out value='${param.name}'/>" required />
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Enter your password" id="password" required />
-
-        <div class="checkpass">
-            <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
-            <label for="showPassword">Show Password</label>
-        </div>
-        
-        <c:if test="${not empty errorMessage}">
-            <p class="error" style="color: red; text-align: center; margin: 10px 0;">${errorMessage}</p>
+        <!-- Login Form -->
+        <form action="login" method="post">
+            <div class="logo">
+                <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
+            </div>
+            <h2>Login</h2>
+            
+            <c:if test="${not empty successMessage}">
+            <p class="success-message">${successMessage}</p>
         </c:if>
 
-        <div class="sub">
-            <input type="submit" value="login">
-        </div>
+            <label for="name">Username:</label>
+            <input type="text" name="name" placeholder="Enter your username" id="name" value="<c:out value='${param.name}'/>" required />
 
-        <div class="sub2">
-            <a href="./SigninForm.jsp" class="signin">Sign Up</a>
-        </div>
-    </form>
-</body>
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Enter your password" id="password" required />
+
+            <div class="checkpass">
+                <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
+                <label for="showPassword">Show Password</label>
+            </div>
+
+            <c:if test="${not empty errorMessage}">
+                <p class="error" style="color: red; text-align: center; margin: 10px 0;">${errorMessage}</p>
+            </c:if>
+
+            <div class="sub">
+                <input type="submit" value="login">
+            </div>
+
+            <div class="sub2">
+                <a href="./SigninForm.jsp" class="signin">Sign Up</a>
+            </div>
+
+            <div class="forgot-password">
+                <a href="./ForgetPassword.jsp">Forgot Password?</a>
+            </div>
+        </form>
+    </body>
 </html>

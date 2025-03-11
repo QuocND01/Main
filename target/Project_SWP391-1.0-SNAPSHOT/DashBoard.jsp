@@ -239,6 +239,7 @@
         </style>
     </head>
     <body>
+        <c:set var="role" value="${sessionScope.role}" />
         <div class="header d-flex justify-content-between align-items-center">
             <div class="logo">
                 <a href="viewBookAdminController">
@@ -261,15 +262,19 @@
             <form action="viewBookController" method="post">
                 <button type="submit" class="btn">All Order</button>
             </form>
-            <form action="viewNewOrderController" method="post">
+            <form action="view-new-order" method="post">
                 <button type="submit" class="btn">New Orders</button>
             </form>
             <form action="ViewListCustomersController" method="get">
                 <button type="submit" class="btn">All Customer</button>
             </form>
-            <form action="viewstaff" method="post">
-                <button type="submit" class="btn">All Staff</button>
-            </form>
+            <!-- Chỉ hiển thị với Admin -->
+            <c:if test="${role == 'Admin'}">
+                <form action="viewstaff" method="post">
+                    <button type="submit" class="btn">All Staff</button>
+                </form>
+            </c:if>
+        </div>
             <form action="viewCategory" method="get">
                 <button type="submit" class="btn">Categories</button>
             </form>

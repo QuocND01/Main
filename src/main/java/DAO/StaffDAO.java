@@ -255,6 +255,58 @@ public class StaffDAO extends DBContext{
     return success;
 }
     
+    public boolean checkEmailAndPhone(String email, String phone) {
+    boolean exists = false;
+    String sql = "SELECT StaffEmail FROM Staffs WHERE StaffEmail = ? AND StaffPNB = ? " +
+                 "UNION " +
+                 "SELECT CustomerEmail FROM Customers WHERE CustomerEmail = ? AND CustomerPNB = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setString(2, phone);
+        ps.setString(3, email);
+        ps.setString(4, phone);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            exists = true;
+        }
+        rs.close();
+        ps.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return exists;
+}
+
+    public boolean updatePassword(String email, String phone, String newPassword) {
+    boolean success = false;
+    String sqlStaff = "UPDATE Staffs SET [Password] = ? WHERE StaffEmail = ? AND StaffPNB = ?";
+    String sqlCustomer = "UPDATE Customers SET [Password] = ? WHERE CustomerEmail = ? AND CustomerPNB = ?";
+
+    try {
+        PreparedStatement ps1 = connection.prepareStatement(sqlStaff);
+        ps1.setString(1, newPassword);
+        ps1.setString(2, email);
+        ps1.setString(3, phone);
+        int rows1 = ps1.executeUpdate();
+        ps1.close();
+
+        PreparedStatement ps2 = connection.prepareStatement(sqlCustomer);
+        ps2.setString(1, newPassword);
+        ps2.setString(2, email);
+        ps2.setString(3, phone);
+        int rows2 = ps2.executeUpdate();
+        ps2.close();
+
+        if (rows1 > 0 || rows2 > 0) {
+            success = true;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return success;
+}
+    
     public static void main(String[] args) {
         StaffDAO staffDAO = new StaffDAO();
 

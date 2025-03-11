@@ -538,13 +538,15 @@
             </div>
 
             <!-- Kiểm tra trạng thái đăng nhập -->
-            <% if (session.getAttribute("acc") != null) { %>
+            <% if (session.getAttribute("account") != null) { %>
             <!-- Hiển thị khi người dùng đã đăng nhập -->
             <form method="post" class="logsign">
-                <a href="viewNewBook">New</a>
-                <a href="viewHotBook" class="hot">Hot</a>
+                <a href="newBookController">New</a>
+                <a href="hotBookController" class="hot">Hot</a>
+                <a href="randomBookController">Random</a>
                 <a href="./Cart.jsp">Your Cart</a>
-                <a href="logoutController">Logout</a>
+                <a href="OrderController">Your Orders</a>
+                <a href="logout">Logout</a>
             </form>
             <% } else { %>
             <!-- Hiển thị khi người dùng chưa đăng nhập -->
@@ -553,12 +555,12 @@
                 <a href="./SigninForm.jsp" class="signin">Sign up</a>
             </form>
             <form method="post" class="logsign">
-                <a href="viewNewBook">New</a>
-                <a href="viewHotBook" class="hot">Hot</a>
+                <a href="newBookController">New</a>
+                <a href="hotBookController" class="hot">Hot</a>
+                <a href="randomBookController">Random</a>
                 <a href="./Cart.jsp">Your Cart</a>
             </form>
-            <% }%>
-
+            <% } %>
            
             <!-- Thanh tìm kiếm -->
             <!-- Thanh tìm kiếm -->
