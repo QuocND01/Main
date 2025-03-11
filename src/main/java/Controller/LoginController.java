@@ -94,12 +94,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             Staffs staff = (Staffs) account;
             String role = staff.getRole(); 
             if (role != null && role.equalsIgnoreCase("Admin")) {
-                response.sendRedirect(request.getContextPath() + "/viewstaff");
+                response.sendRedirect(request.getContextPath() + "/viewBookAdminController");
             } else {
                 response.sendRedirect(request.getContextPath() + "/Staff.jsp");
             }
         } else if (account instanceof Customers) {
-            response.sendRedirect(request.getContextPath() + "/ShopWeb.jsp");
+            response.sendRedirect(request.getContextPath() + "/ViewBookCustomerController");
         }
     } else {
         request.setAttribute("errorMessage", "Username or Password is incorrect or your account has been locked..");

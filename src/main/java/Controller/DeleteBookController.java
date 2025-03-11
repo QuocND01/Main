@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.AuthorDAO;
 import DAO.BookDAO;
 import DAO.CategoryDAO;
+import Model.Authors;
 import Model.Books;
 import Model.Categorys;
 import java.io.IOException;
@@ -41,12 +43,16 @@ public class DeleteBookController extends HttpServlet {
         String bookID = request.getParameter("BookID");
         BookDAO book = new BookDAO();
         CategoryDAO cate = new CategoryDAO();
+        AuthorDAO author = new AuthorDAO();
         ArrayList<Categorys> catelist = new ArrayList<>();
+        ArrayList<Authors> authorlist = new ArrayList<>();
         catelist = cate.getAllCategorys();
+        authorlist = author.getAllAuthor();
         Books b = book.getBookByBookID(bookID);
         if (b != null) {
             session.setAttribute("book", b);
             session.setAttribute("cate", catelist);
+            session.setAttribute("author", authorlist);
             request.getRequestDispatcher("DeleteBookView.jsp").forward(request, response);
         }
     }

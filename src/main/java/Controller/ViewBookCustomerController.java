@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.AuthorDAO;
 import DAO.BookDAO;
 import DAO.CategoryDAO;
+import Model.Authors;
 import Model.Books;
 import Model.Categorys;
 import jakarta.servlet.http.HttpSession;
@@ -36,13 +38,16 @@ public class ViewBookCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       HttpSession session = request.getSession();
-        BookDAO a = new BookDAO();
-        CategoryDAO b = new CategoryDAO();
-            ArrayList<Books> l = a.getAllBook();
-            ArrayList<Categorys> c = b.getAllCategorys();
-            session.setAttribute("l", l);
-            session.setAttribute("listCategory", c);
+        HttpSession session = request.getSession();
+        BookDAO b = new BookDAO();
+        AuthorDAO a = new AuthorDAO();
+        CategoryDAO c = new CategoryDAO();
+        ArrayList<Books> l = b.getAllBook();
+        ArrayList<Categorys> catagory = c.getAllCategorys();
+        ArrayList<Authors> author = a.getAllAuthor();
+        session.setAttribute("l", l);
+        session.setAttribute("category", catagory);
+        session.setAttribute("author", author);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 

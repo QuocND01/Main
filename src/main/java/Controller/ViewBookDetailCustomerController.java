@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.AuthorDAO;
 import DAO.BookDAO;
 import DAO.CategoryDAO;
+import Model.Authors;
 import Model.Books;
 import Model.Categorys;
 import java.io.IOException;
@@ -39,12 +41,16 @@ public class ViewBookDetailCustomerController extends HttpServlet {
             throws ServletException, IOException {
         String BookID = request.getParameter("BookID");
         BookDAO b = new BookDAO();
+        AuthorDAO a = new AuthorDAO();
          CategoryDAO c = new CategoryDAO();
          ArrayList<Categorys> cata = new ArrayList<Categorys>();
+         ArrayList<Authors> au = new ArrayList<Authors>();
         Books book = b.getBookByBookID(BookID);
         cata = c.getAllCategorys();
+        au = a.getAllAuthor();
         request.setAttribute("detailBook", book);
         request.setAttribute("cata", cata);
+        request.setAttribute("author", au);
         request.getRequestDispatcher("ViewBookDetailCustomer.jsp").forward(request, response);
     }
 

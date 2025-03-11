@@ -4,7 +4,9 @@
  */
 package Controller;
 
+import DAO.AuthorDAO;
 import DAO.BookDAO;
+import Model.Authors;
 import Model.Books;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
@@ -48,18 +50,18 @@ public class AddBookController extends HttpServlet {
         session.setAttribute("errorDescribe", null);
         session.setAttribute("errorImage", null);
         session.setAttribute("errorPrice", null);
-        session.setAttribute("errorStock", null);
+        session.setAttribute("errorQuantity", null);
         session.setAttribute("errorCategoryID", null);
         int year = 0;
         Double weight = 0.0;
         int number = 0;
         Double price = 0.0;
-        int stock = 0;
+        int quantity = 0;
         boolean erroryear = false;
         boolean errorweight = false;
         boolean errornumber = false;
         boolean errorprice = false;
-        boolean errorstock = false;
+        boolean errorquantity = false;
         boolean hasError = false;
         String error = "";
         String BookName = request.getParameter("BookName");
@@ -73,11 +75,10 @@ public class AddBookController extends HttpServlet {
         String Describe = request.getParameter("Describe");
         String Image = request.getParameter("Image");
         String Price = request.getParameter("Price");
-        String Stock = request.getParameter("Stock");
+        String Quantity = request.getParameter("Quantity");
         String CategoryID = request.getParameter("CategoryID");
         int yearnow = LocalDate.now().getYear();
 
-        
         try {
             year = Integer.parseInt(YearOfPublication);
         } catch (NumberFormatException e) {
@@ -99,9 +100,9 @@ public class AddBookController extends HttpServlet {
             errorprice = true;
         }
         try {
-            stock = Integer.parseInt(Stock);
+            quantity = Integer.parseInt(Quantity);
         } catch (NumberFormatException e) {
-            errorstock = true;
+            errorquantity = true;
         }
         if (BookName.trim().isEmpty() || BookName == null) {
             error = "BookName is required";
@@ -151,23 +152,43 @@ public class AddBookController extends HttpServlet {
             error = "Price is required and must bigger than 0";
             hasError = true;
         }
-        if (stock < 0 || errorstock) {
-            error = "Stock is required and must be a positive number";
+        if (quantity < 0 || errorquantity) {
+            error = "Quantity is required and must be a positive number";
             hasError = true;
         }
         if (hasError == false) {
             boolean existed = false;
             try {
                 BookDAO b = new BookDAO();
+                AuthorDAO a = new AuthorDAO();
                 ArrayList<Books> list = new ArrayList<>();
+                ArrayList<Authors> author = new ArrayList<>();
+                list = b.getAllBook();
+                author = a.getAllAuthor();
+                int authorid = a.getrow() + 1;
+                boolean existauthor = false;
+                String authorID = "";
+                for (Authors au : author) {
+                    if (au.getAuthorName().equalsIgnoreCase(Author)) {
+                        authorID = au.getAuthorID();
+                        existauthor = true;
+                        break;
+                    }
+                }
+                if (existauthor == false) {
+                    Authors aut = new Authors("A" + authorid, Author, "Active");
+                    a.addAuthor(aut);
+                    authorID = "A" + authorid;
+                }
+
                 for (Books book : list) {
-                    if (book.getAuthor().equals(Author) && book.getYearOfPublication().equals(YearOfPublication)&& book.getStatus()!= "Unactive") {
-                       existed = true;
+                    if (book.getAuthorID().equals(authorID) && book.getYearOfPublication().equals(YearOfPublication) && book.getStatus() != "Unactive") {
+                        existed = true;
                     }
                 }
                 if (existed == false) {
-                    int id = b.getrow()+1;
-                   Books book = new Books( "B"+id,BookName, SupplierName, Author, YearOfPublication, Weight, Size, NumberOfPages, Form, Describe, Image, Price, Stock , CategoryID, "Active");
+                    int id = b.getrow() + 1;
+                    Books book = new Books("B" + id, BookName, SupplierName, authorID, YearOfPublication, Weight, Size, NumberOfPages, Form, Describe, Image, Price, Quantity, CategoryID, "Active");
                     b.insertBook(book);
                     response.sendRedirect("viewBookAdminController");
                 } else {
@@ -183,5 +204,4 @@ public class AddBookController extends HttpServlet {
         }
     }
 
-   
 }

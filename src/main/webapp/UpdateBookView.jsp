@@ -125,8 +125,11 @@
                 <input type="text" id="SupplierName" name="SupplierName" value="${b.supplierName}" required>
 
                 <label for="Author">Author</label>
-                <input type="text" id="Author" name="Author" value="${b.author}" required>
-
+                <c:forEach items="${author}" var="a">
+                    <c:if test = "${a.authorID == b.authorID}">
+                        <input type="text" id="Author" name="Author" value="${a.authorName}">
+                    </c:if>
+                </c:forEach>
                 <label for="YearOfPublication">Year Of Publication</label>
                 <input type="text" id="YearOfPublication" name="YearOfPublication" value="${b.yearOfPublication}" required>
 
@@ -151,20 +154,20 @@
                 <label for="Price">Price</label>
                 <input type="text" id="Price" name="Price" value="${b.price}" required>
 
-                <label for="Stock">Stock</label>
-                <input type="text" id="Stock" name="Stock" value="${b.stock}" required>
+                <label for="Quantity">Qunatity</label>
+                <input type="text" id="Quantity" name="Quantity" value="${b.quantity}" required>
 
                 <label for="CategoryID">Category</label>
                 <select id="CategoryID" name="CategoryID">
-                    <option value="1" ${b.categoryID == 1 ? 'selected' : ''}>Classic Literature</option>
-                    <option value="2" ${b.categoryID == 2 ? 'selected' : ''}>Non-Fiction</option>
-                    <option value="3" ${b.categoryID == 3 ? 'selected' : ''}>Fantasy</option>
-                    <option value="4" ${b.categoryID == 4 ? 'selected' : ''}>Self-Help</option>
-                    <option value="5" ${b.categoryID == 5 ? 'selected' : ''}>Science</option>
-                    <option value="6" ${b.categoryID == 6 ? 'selected' : ''}>History</option>
-                    <option value="7" ${b.categoryID == 7 ? 'selected' : ''}>Finance</option>
-                    <option value="8" ${b.categoryID == 8 ? 'selected' : ''}>Psychology</option>
-                    <option value="9" ${b.categoryID == 9 ? 'selected' : ''}>Dystopian Fiction</option>
+                    <option value="CT1" ${b.categoryID == "CT1" ? 'selected' : ''}>Classic Literature</option>
+                    <option value="CT2" ${b.categoryID == "CT2" ? 'selected' : ''}>Non-Fiction</option>
+                    <option value="CT3" ${b.categoryID == "CT3" ? 'selected' : ''}>Fantasy</option>
+                    <option value="CT4" ${b.categoryID == "CT4" ? 'selected' : ''}>Self-Help</option>
+                    <option value="CT5" ${b.categoryID == "CT5" ? 'selected' : ''}>Science</option>
+                    <option value="CT6" ${b.categoryID == "CT6" ? 'selected' : ''}>History</option>
+                    <option value="CT7" ${b.categoryID == "CT7" ? 'selected' : ''}>Finance</option>
+                    <option value="CT8" ${b.categoryID == "CT8" ? 'selected' : ''}>Psychology</option>
+                    <option value="CT9" ${b.categoryID == "CT9" ? 'selected' : ''}>Dystopian Fiction</option>
 
                 </select>
 

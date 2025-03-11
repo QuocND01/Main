@@ -13,7 +13,7 @@ public class Books {
     private String BookID;
     private String BookName;
     private String SupplierName;
-    private String Author;
+    private String AuthorID;
     private String YearOfPublication;
     private String Weight;
     private String Size;
@@ -22,27 +22,27 @@ public class Books {
     private String Describe;
     private String Image;
     private String Price;
-    private String Stock;
+    private String Quantity;
     private String CategoryID;
     private String Status;
 
     public Books() {
     }
 
-    public Books(String BookID, String BookName, String SupplierName, String Author, String YearOfPublication, String Weight, String Size, String NumberOfPages, String Form, String Discribe, String Image, String Price, String Stock, String CategoryID, String Status) {
+    public Books(String BookID, String BookName, String SupplierName, String AuthorID, String YearOfPublication, String Weight, String Size, String NumberOfPages, String Form, String Describe, String Image, String Price, String Quantity, String CategoryID, String Status) {
         this.BookID = BookID;
         this.BookName = BookName;
         this.SupplierName = SupplierName;
-        this.Author = Author;
+        this.AuthorID = AuthorID;
         this.YearOfPublication = YearOfPublication;
         this.Weight = Weight;
         this.Size = Size;
         this.NumberOfPages = NumberOfPages;
         this.Form = Form;
-        this.Describe = Discribe;
+        this.Describe = Describe;
         this.Image = Image;
         this.Price = Price;
-        this.Stock = Stock;
+        this.Quantity = Quantity;
         this.CategoryID = CategoryID;
         this.Status = Status;
     }
@@ -71,12 +71,12 @@ public class Books {
         this.SupplierName = SupplierName;
     }
 
-    public String getAuthor() {
-        return Author;
+    public String getAuthorID() {
+        return AuthorID;
     }
 
-    public void setAuthor(String Author) {
-        this.Author = Author;
+    public void setAuthorID(String AuthorID) {
+        this.AuthorID = AuthorID;
     }
 
     public String getYearOfPublication() {
@@ -123,8 +123,8 @@ public class Books {
         return Describe;
     }
 
-    public void setDescribe(String Discribe) {
-        this.Describe = Discribe;
+    public void setDescribe(String Describe) {
+        this.Describe = Describe;
     }
 
     public String getImage() {
@@ -143,12 +143,12 @@ public class Books {
         this.Price = Price;
     }
 
-    public String getStock() {
-        return Stock;
+    public String getQuantity() {
+        return Quantity;
     }
 
-    public void setStock(String Stock) {
-        this.Stock = Stock;
+    public void setQuantity(String Quantity) {
+        this.Quantity = Quantity;
     }
 
     public String getCategoryID() {
@@ -169,8 +169,10 @@ public class Books {
 
     @Override
     public String toString() {
-        return "Books{" + "BookID=" + BookID + ", BookName=" + BookName + ", SupplierName=" + SupplierName + ", Author=" + Author + ", YearOfPublication=" + YearOfPublication + ", Weight=" + Weight + ", Size=" + Size + ", NumberOfPages=" + NumberOfPages + ", Form=" + Form + ", Describe=" + Describe + ", Image=" + Image + ", Price=" + Price + ", Stock=" + Stock + ", CategoryID=" + CategoryID + ", Status=" + Status + '}';
+        return "Books{" + "BookID=" + BookID + ", BookName=" + BookName + ", SupplierName=" + SupplierName + ", AuthorID=" + AuthorID + ", YearOfPublication=" + YearOfPublication + ", Weight=" + Weight + ", Size=" + Size + ", NumberOfPages=" + NumberOfPages + ", Form=" + Form + ", Describe=" + Describe + ", Image=" + Image + ", Price=" + Price + ", Quantity=" + Quantity + ", CategoryID=" + CategoryID + ", Status=" + Status + '}';
     }
+
+    
 
     
     

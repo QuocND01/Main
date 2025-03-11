@@ -11,13 +11,15 @@ package Model;
 public class Categorys {
     private String CategoryID;
     private String CategoryName;
+    private String Status;
 
     public Categorys() {
     }
 
-    public Categorys(String CategoryID, String CategoryName) {
+    public Categorys(String CategoryID, String CategoryName, String Status) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
+        this.Status = Status;
     }
 
     public String getCategoryID() {
@@ -36,10 +38,19 @@ public class Categorys {
         this.CategoryName = CategoryName;
     }
 
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+
     @Override
     public String toString() {
-        return "Categorys{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
+        return "Categorys{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", Status=" + Status + '}';
     }
+
     
     
 }

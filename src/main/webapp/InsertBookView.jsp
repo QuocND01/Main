@@ -169,20 +169,20 @@
                 <label for="Price">Price</label>
                 <input type="text" id="Price" name="Price" required>
 
-                <label for="Stock">Stock</label>
-                <input type="text" id="Stock" name="Stock" required>
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" required>
 
                 <label for="CategoryID">CategoryID</label>
                 <select id="CategoryID" name="CategoryID">
-                    <option value="1">Classic Literature</option>
-                    <option value="2">Non-Fiction</option>
-                    <option value="3">Fantasy</option>
-                    <option value="4">Self-Help</option>
-                    <option value="5">Science</option>
-                    <option value="6">History</option>
-                    <option value="7">Finance</option>
-                    <option value="8">Psychology</option>
-                    <option value="9">Dystopian Fiction</option>
+                    <option value="CT1">Classic Literature</option>
+                    <option value="CT2">Non-Fiction</option>
+                    <option value="CT3">Fantasy</option>
+                    <option value="CT4">Self-Help</option>
+                    <option value="CT5">Science</option>
+                    <option value="CT6">History</option>
+                    <option value="CT7">Finance</option>
+                    <option value="CT8">Psychology</option>
+                    <option value="CT9">Dystopian Fiction</option>
                 </select>
                 <input type="submit" value="Insert Book">
                 <c:if test="${not empty sessionScope.errorBook}">
