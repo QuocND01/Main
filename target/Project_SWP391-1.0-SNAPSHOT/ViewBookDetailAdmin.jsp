@@ -291,12 +291,17 @@
                 <div class="card-body">
                     <h1 class="title">${detailBook.bookName}</h1>
                     <p class="price">US $${detailBook.price}</p>
+                    <c:forEach items="${author}" var="a">
+                        <c:if test = "${a.authorID == detailBook.authorID}">
+                            <p>Author: ${a.authorName}</p>
+                        </c:if>
+                    </c:forEach>
                     <c:forEach items="${cata}" var="c">
                         <c:if test = "${c.categoryID == b.categoryID}">
                             <p>Category: ${c.categoryName}</p>
                         </c:if>
                     </c:forEach>
-                    <p class="stock">In Stock: ${detailBook.stock}</p>
+                    <p class="stock">In Stock: ${detailBook.quantity}</p>
                     <dl class="item-property">
                         <dt>Description</dt>
                         <dd><p>${detailBook.describe}</p></dd>

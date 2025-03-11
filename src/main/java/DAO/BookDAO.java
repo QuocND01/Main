@@ -54,12 +54,12 @@ public class BookDAO extends DBContext.DBContext {
         return list;
     }
 
-    public ArrayList<Books> getBookByCategory(String CategoryName) {
+    public ArrayList<Books> getBookByCategoryID(String CategoryID) {
         ArrayList<Books> list = new ArrayList<>();
         String sql = "	SELECT * FROM Books WHERE CategoryID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, CategoryName);
+            st.setString(1, CategoryID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 list.add(new Books(
@@ -118,7 +118,7 @@ public class BookDAO extends DBContext.DBContext {
 
         return null;
     }
-    
+
     public Books getBookByBookName(String BookName) {
         String sql = "	SELECT * FROM Books WHERE BookName = ?";
         try {
@@ -184,6 +184,51 @@ public class BookDAO extends DBContext.DBContext {
         return list;
     }
 
+    public ArrayList<Books> getListOfHotBooks() {
+
+        ArrayList<Books> list = new ArrayList<>();
+        String sql = "WITH Frequency AS (\n"
+                + "    SELECT \n"
+                + "        od.bookid, \n"
+                + "        COUNT(*) AS frequency\n"
+                + "    FROM orderdetails od\n"
+                + "    JOIN orders o ON od.orderid = o.orderid\n"
+                + "    WHERE o.orderdate >= DATEADD(DAY, -30, GETDATE())\n"
+                + "    GROUP BY od.bookid\n"
+                + ")\n"
+                + "SELECT b.*, f.frequency\n"
+                + "FROM books b\n"
+                + "JOIN Frequency f ON b.bookid = f.bookid\n"
+                + "ORDER BY f.frequency DESC;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Books(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15)));
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
     public void insertBook(Books book) {
         String sql = "INSERT INTO Books VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -191,7 +236,7 @@ public class BookDAO extends DBContext.DBContext {
             st.setString(1, book.getBookID());
             st.setString(2, book.getBookName());
             st.setString(3, book.getSupplierName());
-            st.setString(4, book.getAuthor());
+            st.setString(4, book.getAuthorID());
             st.setString(5, book.getYearOfPublication());
             st.setDouble(6, Double.parseDouble(book.getWeight()));
             st.setString(7, book.getSize());
@@ -200,8 +245,8 @@ public class BookDAO extends DBContext.DBContext {
             st.setString(10, book.getDescribe());
             st.setString(11, book.getImage());
             st.setDouble(12, Double.parseDouble(book.getPrice()));
-            st.setInt(13, Integer.parseInt(book.getStock()));
-            st.setInt(14, Integer.parseInt(book.getCategoryID()));
+            st.setInt(13, Integer.parseInt(book.getQuantity()));
+            st.setString(14, book.getCategoryID());
             st.setString(15, "Active");
             st.executeUpdate();
             st.close();
@@ -220,14 +265,14 @@ public class BookDAO extends DBContext.DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public int getrow() {
         String sql = "SELECT COUNT(*) FROM Books";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                String a =  rs.getString(1);
+                String a = rs.getString(1);
                 int b = Integer.parseInt(a);
                 return b;
             }
@@ -239,26 +284,26 @@ public class BookDAO extends DBContext.DBContext {
     }
 
     public void updateBook(Books book) {
-        String sql = "UPDATE Books SET BookName = ?,\n" +
-"                 SupplierName = ?,\n" +
-"                 Author = ?,\n" +
-"                 YearOfPublication = ?,\n" +
-"                 Weight = ?,\n" +
-"                 Size  = ?,\n" +
-"                 NumberOfPages = ?,\n" +
-"                 Form = ?,\n" +
-"                 Describe = ?,\n" +
-"                 Image = ?,\n" +
-"                 Price = ?,\n" +
-"                 Stock = ?,\n" +
-"                 CategoryID  = ?,\n" +
-"                 Status  = ?\n" +
-"                WHERE BookID = ?";
+        String sql = "UPDATE Books SET BookName = ?,\n"
+                + "                 SupplierName = ?,\n"
+                + "                 AuthorID = ?,\n"
+                + "                 YearOfPublication = ?,\n"
+                + "                 Weight = ?,\n"
+                + "                 Size  = ?,\n"
+                + "                 NumberOfPages = ?,\n"
+                + "                 Form = ?,\n"
+                + "                 Describe = ?,\n"
+                + "                 Image = ?,\n"
+                + "                 Price = ?,\n"
+                + "                 Quantity = ?,\n"
+                + "                 CategoryID  = ?,\n"
+                + "                 Status  = ?\n"
+                + "                WHERE BookID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, book.getBookName());
             st.setString(2, book.getSupplierName());
-            st.setString(3, book.getAuthor());
+            st.setString(3, book.getAuthorID());
             st.setString(4, book.getYearOfPublication());
             st.setDouble(5, Double.parseDouble(book.getWeight()));
             st.setString(6, book.getSize());
@@ -267,8 +312,8 @@ public class BookDAO extends DBContext.DBContext {
             st.setString(9, book.getDescribe());
             st.setString(10, book.getImage());
             st.setDouble(11, Double.parseDouble(book.getPrice()));
-            st.setInt(12, Integer.parseInt(book.getStock()));
-            st.setInt(13, Integer.parseInt(book.getCategoryID()));
+            st.setInt(12, Integer.parseInt(book.getQuantity()));
+            st.setString(13, book.getCategoryID());
             st.setString(14, "Active");
             st.setString(15, book.getBookID());
             st.executeUpdate();
@@ -360,13 +405,11 @@ public class BookDAO extends DBContext.DBContext {
 
     public static void main(String[] args) {
         BookDAO dao = new BookDAO();
-        dao.deleteBook("B21");
-                ArrayList <Books> list = new ArrayList<>();
-                list = dao.getAllBook();
-                for (Books books : list) {
-                    System.out.println(books.toString());
+        ArrayList<Books> list = new ArrayList();
+        list = dao.getListOfHotBooks();
+        for (Books books : list) {
+            System.out.println(books.toString());
         }
-                
-
     }
+
 }

@@ -43,13 +43,9 @@ public class SearchBookCustomerController extends HttpServlet {
             throws ServletException, IOException {
         String search = request.getParameter("search");
         BookDAO bd = new BookDAO();
-        CategoryDAO cate = new CategoryDAO();
         HttpSession session = request.getSession();
         ArrayList<Books> l = bd.searchBook(search);
-        ArrayList<Categorys> listCategory = new ArrayList<>();
-        listCategory = cate.getAllCategorys();
         session.setAttribute("l", l);
-        session.setAttribute("listCategory", listCategory);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 

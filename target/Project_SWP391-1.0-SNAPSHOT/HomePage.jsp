@@ -541,9 +541,8 @@
             <% if (session.getAttribute("acc") != null) { %>
             <!-- Hiển thị khi người dùng đã đăng nhập -->
             <form method="post" class="logsign">
-                <a href="newBookController">New</a>
-                <a href="hotBookController" class="hot">Hot</a>
-                <a href="randomBookController">Random</a>
+                <a href="viewNewBook">New</a>
+                <a href="viewHotBook" class="hot">Hot</a>
                 <a href="./Cart.jsp">Your Cart</a>
                 <a href="logoutController">Logout</a>
             </form>
@@ -554,9 +553,8 @@
                 <a href="./SigninForm.jsp" class="signin">Sign up</a>
             </form>
             <form method="post" class="logsign">
-                <a href="newBookController">New</a>
-                <a href="hotBookController" class="hot">Hot</a>
-                <a href="randomBookController">Random</a>
+                <a href="viewNewBook">New</a>
+                <a href="viewHotBook" class="hot">Hot</a>
                 <a href="./Cart.jsp">Your Cart</a>
             </form>
             <% }%>
@@ -597,8 +595,8 @@
         <div class="categories">
             <h3>Categories</h3>
             <ul>
-                <c:forEach items="${listCategory}" var="c">
-                    <li><a href="categoryController?CategoryName=${c.categoryName}">${c.categoryName}</a></li>
+                <c:forEach items="${category}" var="c">
+                    <li><a href="fillerBookByCategory?CategoryID=${c.categoryID}">${c.categoryName}</a></li>
                     </c:forEach>
             </ul>
 
@@ -609,15 +607,19 @@
         <!-- Books Section -->
         <div class="books">
             <c:forEach items="${l}" var="b">
-                <c:if test="${b.stock != 0 || b.status != 'Unactive'}">
+                <c:if test="${b.quantity != 0 || b.status != 'Unactive'}">
                     <div class="book-card">
                         <img src="${b.image}" alt="${b.bookName}">
                         <h4><a href="viewBookDetailCustomerController?BookID=${b.bookID}">${b.bookName}</a></h4>
                         <div class="book-details">
                             <p>Price: ${b.price}$</p>
-                            <p>In Stock: ${b.stock}</p>
-                            <p>Author: ${b.author}</p>
-                            <c:forEach items="${listCategory}" var="c">
+                            <p>In Stock: ${b.quantity}</p>
+                           <c:forEach items="${author}" var="a">
+                                <c:if test = "${a.authorID == b.authorID}">
+                                    <p>Author: ${a.authorName}</p>
+                                </c:if>
+                            </c:forEach>
+                            <c:forEach items="${category}" var="c">
                                 <c:if test = "${c.categoryID == b.categoryID}">
                                     <p>Category: ${c.categoryName}</p>
                                 </c:if>
@@ -627,7 +629,7 @@
                         <form action="${pageContext.request.contextPath}/cart" method="post">
                             <input type="hidden" name="action" value="add" />
                             <input type="hidden" name="bookId" value="${b.bookID}" />
-                            <input type="number" name="quantity" value="1" min="1" max ="${b.stock}"/>
+                            <input type="number" name="quantity" value="1" min="1" max ="${b.quantity}"/>
                             <button type="submit">Add to Cart</button>
                         </form>
                     </div>

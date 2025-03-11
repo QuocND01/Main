@@ -148,7 +148,7 @@
             .item-property dt {
                 font-weight: bold;
                 color: #444;
-                margin-top: 15px;
+                margin-top: 10px;
             }
 
             .item-property dd p {
@@ -264,6 +264,10 @@
             .footer-bottom a:hover {
                 text-decoration: underline;
             }
+            
+            .buy-group{
+                margin-top: 350px;
+            }
         </style>
     </head>
     <body>
@@ -291,30 +295,38 @@
                 <div class="card-body">
                     <h1 class="title">${detailBook.bookName}</h1>
                     <p class="price">US $${detailBook.price}</p>
+                     <c:forEach items="${author}" var="a">
+                                <c:if test = "${a.authorID == detailBook.authorID}">
+                                    <p>Author: ${a.authorName}</p>
+                                </c:if>
+                            </c:forEach>
                     <c:forEach items="${cata}" var="c">
-                                <c:if test = "${c.categoryID == b.categoryID}">
+                                <c:if test = "${c.categoryID == detailBook.categoryID}">
                                     <p>Category: ${c.categoryName}</p>
                                 </c:if>
                             </c:forEach>
-                    <p class="stock">In Stock: ${detailBook.stock}</p>
+                    <p class="stock">In Stock: ${detailBook.quantity}</p>
                     <dl class="item-property">
                         <dt>Description</dt>
                         <dd><p>${detailBook.describe}</p></dd>
                     </dl>
-                    <hr>
+                    
                     <!-- Form to Add to Cart with Quantity -->
-                    <form action="${pageContext.request.contextPath}/cart" method="post">
+                    <div class="buy-group">
+                        <hr>
+                        <form action="${pageContext.request.contextPath}/cart" method="post">
                         <input type="hidden" name="action" value="add">
                         <input type="hidden" name="bookId" value="${detailBook.bookID}">
 
                         <!-- Input số lượng (Quantity) -->
                         <label for="quantity" style="font-weight: bold;">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="${detailBook.stock}" class="quantity-input">
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="${detailBook.quantity}" class="quantity-input">
 
                         <!-- Nút Add to Cart với biểu tượng giỏ hàng -->
                         <button type="submit" class="btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                     </form>
-
+                    </div>
+                    
                 </div>
             </div>
         </div>

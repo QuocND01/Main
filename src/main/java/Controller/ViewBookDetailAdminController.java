@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAO.AuthorDAO;
 import DAO.BookDAO;
 import DAO.CategoryDAO;
+import Model.Authors;
 import Model.Books;
 import Model.Categorys;
 import java.io.IOException;
@@ -25,16 +27,20 @@ import java.util.ArrayList;
 public class ViewBookDetailAdminController extends HttpServlet {
 
     @Override
-    protected void doGet(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response)
-            throws jakarta.servlet.ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String BookID = request.getParameter("BookID");
         BookDAO b = new BookDAO();
-        CategoryDAO c = new CategoryDAO();
-        ArrayList<Categorys> cata = new ArrayList<Categorys>();
+        AuthorDAO a = new AuthorDAO();
+         CategoryDAO c = new CategoryDAO();
+         ArrayList<Categorys> cata = new ArrayList<Categorys>();
+         ArrayList<Authors> au = new ArrayList<Authors>();
         Books book = b.getBookByBookID(BookID);
         cata = c.getAllCategorys();
+        au = a.getAllAuthor();
         request.setAttribute("detailBook", book);
         request.setAttribute("cata", cata);
+        request.setAttribute("author", au);
         request.getRequestDispatcher("ViewBookDetailAdmin.jsp").forward(request, response);
     }
 }
