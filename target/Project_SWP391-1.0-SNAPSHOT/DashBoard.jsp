@@ -273,6 +273,16 @@
             <form action="viewCategory" method="get">
                 <button type="submit" class="btn">Categories</button>
             </form>
+
+
+            <form action="ViewWarehouseController" method="get">
+                <button type="submit" class="btn">View Warehouse</button>
+            </form>  
+            <form action="AuthorController" method="get">
+                <button type="submit" class="btn">View Authors</button>
+            </form>
+
+
         </div>
 
 

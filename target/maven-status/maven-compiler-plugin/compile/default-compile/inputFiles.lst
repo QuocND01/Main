@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7a15285 (feat: manage warehouse ( view + import ) ,manage authors ( CRUD ))
+>>>>>>> b94384d (feat: managewarehouse ( view + imprt), ManageAuthors (CRUD))
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\Controller\ViewCustomerDetailsController.java
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\DBContext\DBContext.java
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\DAO\BookDAO.java
@@ -38,3 +45,55 @@ C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\Controller\LogoutController.java
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\Controller\DeleteCategoryController.java
 C:\Users\NDQ\Desktop\ProjectSWP_BACKUP\PROJETC_DATABASE\PROJECT_SWP391\src\main\java\Controller\UpdateStaffController.java
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewBookDetailAdminController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Categorys.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\CustomerDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\UpdateBookController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\CategoryDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\DeleteBookController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\BlockStaffAccountController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\StaffDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\SearchBookCustomerController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Books.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewWarehouseController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\SearchCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\StaffDetailController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewCustomerDetailsController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Staffs.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewBookDetailCustomerController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\BookDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewBookCustomerController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\UpdateCusProfile.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\RegisterController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\AuthorController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewHotBookController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\AddStaffController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Warehouse.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\UpdateCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewNewBookController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewBookAdminController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\DeleteCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\SearchBookAdminController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewListCustomersController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\AuthorDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DAO\WarehouseDAO.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Customers.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ViewStaffAccountController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Model\Authors.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\FillerBookByCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\LogoutController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\UpdateStaffController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\AddBookController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\ProfileController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\AddCategoryController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\Controller\LoginController.java
+D:\11_3_2025_SWP\Main_11_3_2025\src\main\java\DBContext\DBContext.java
+>>>>>>> 9dde358 (feat: managewarehouse ( view + imprt), ManageAuthors (CRUD))
+>>>>>>> 7a15285 (feat: manage warehouse ( view + import ) ,manage authors ( CRUD ))
+>>>>>>> b94384d (feat: managewarehouse ( view + imprt), ManageAuthors (CRUD))
