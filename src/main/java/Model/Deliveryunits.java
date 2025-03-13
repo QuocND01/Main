@@ -11,13 +11,15 @@ package Model;
 public class Deliveryunits {
     private String unitID;
     private String unitName;
+    private String status;
 
     public Deliveryunits() {
     }
 
-    public Deliveryunits(String unitID, String unitName) {
+    public Deliveryunits(String unitID, String unitName, String status) {
         this.unitID = unitID;
         this.unitName = unitName;
+        this.status = status;
     }
 
     public String getUnitID() {
@@ -36,10 +38,18 @@ public class Deliveryunits {
         this.unitName = unitName;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Deliveryunits{" + "unitID=" + unitID + ", unitName=" + unitName + '}';
+        return "Deliveryunits{" + "unitID=" + unitID + ", unitName=" + unitName + ", status=" + status + '}';
     }
-    
+
     
 }

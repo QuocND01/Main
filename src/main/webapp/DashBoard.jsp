@@ -265,9 +265,11 @@
             <form action="view-new-order" method="post">
                 <button type="submit" class="btn">New Orders</button>
             </form>
-            <form action="ViewListCustomersController" method="get">
-                <button type="submit" class="btn">All Customer</button>
+            <form action="ManageCustomersController" method="get">
+                <button type="submit" class="btn">Manage Customers</button>
             </form>
+            <a href="VoucherController" class="btn">Manage Vouchers</a>
+            <a href="DeliveryunitController" class="btn">Manage Delivery Units</a>
             <!-- Chỉ hiển thị với Admin -->
             <c:if test="${role == 'Admin'}">
                 <form action="viewstaff" method="post">
@@ -275,10 +277,9 @@
                 </form>
             </c:if>
         </div>
-            <form action="viewCategory" method="get">
-                <button type="submit" class="btn">Categories</button>
-            </form>
-        </div>
+        <form action="viewCategory" method="get">
+            <button type="submit" class="btn">Categories</button>
+        </form>
 
 
         <div class="container">

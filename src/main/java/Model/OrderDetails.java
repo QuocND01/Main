@@ -6,24 +6,32 @@ package Model;
 
 /**
  *
- * @author Long Ho
+ * @author QuocNHMCE182015
  */
 public class OrderDetails {
+    private String orderDetailID;
     private String orderID;
     private String bookID;
-    private String bookTitle;
     private int quantity;
-    private double price;
+    private Double price;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(String orderID, String bookID, String bookTitle, int quantity, double price) {
+    public OrderDetails(String orderDetailID, String orderID, String bookID, int quantity, Double price) {
+        this.orderDetailID = orderDetailID;
         this.orderID = orderID;
         this.bookID = bookID;
-        this.bookTitle = bookTitle;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public String getOrderDetailID() {
+        return orderDetailID;
+    }
+
+    public void setOrderDetailID(String orderDetailID) {
+        this.orderDetailID = orderDetailID;
     }
 
     public String getOrderID() {
@@ -42,14 +50,6 @@ public class OrderDetails {
         this.bookID = bookID;
     }
 
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -58,13 +58,17 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
-    
+
+    @Override
+    public String toString() {
+        return "OrderDetails{" + "orderDetailID=" + orderDetailID + ", orderID=" + orderID + ", bookID=" + bookID + ", quantity=" + quantity + ", price=" + price + '}';
+    }
     
 }

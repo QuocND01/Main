@@ -1,3 +1,5 @@
+//2
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -524,7 +526,41 @@
                 color: #ff6347; /* Màu sáng hơn khi hover */
                 text-shadow: 0 0 15px rgba(255, 140, 0, 0.7); /* Hiệu ứng phát sáng mạnh hơn khi hover */
             }
+            .cart-notification {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                font-size: 16px;
+                z-index: 1000;
+                animation: fadeInOut 3s;
+            }
 
+            .cart-notification.error {
+                background: #f44336;
+            }
+
+            @keyframes fadeInOut {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                10% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
         </style>
     </head>
     <body>
@@ -560,8 +596,8 @@
                 <a href="randomBookController">Random</a>
                 <a href="./Cart.jsp">Your Cart</a>
             </form>
-            <% } %>
-           
+            <% }%>
+
             <!-- Thanh tìm kiếm -->
             <!-- Thanh tìm kiếm -->
             <form method="get" action="searchBookCustomerController">
@@ -616,7 +652,7 @@
                         <div class="book-details">
                             <p>Price: ${b.price}$</p>
                             <p>In Stock: ${b.quantity}</p>
-                           <c:forEach items="${author}" var="a">
+                            <c:forEach items="${author}" var="a">
                                 <c:if test = "${a.authorID == b.authorID}">
                                     <p>Author: ${a.authorName}</p>
                                 </c:if>
@@ -628,11 +664,10 @@
                             </c:forEach>
                             <p>${b.describe}</p>
                         </div>
-                        <form action="${pageContext.request.contextPath}/cart" method="post">
+                        <form action="CartController" method="post">
                             <input type="hidden" name="action" value="add" />
                             <input type="hidden" name="bookId" value="${b.bookID}" />
-                            <input type="number" name="quantity" value="1" min="1" max ="${b.quantity}"/>
-                            <button type="submit">Add to Cart</button>
+                            <button type="button" onclick="addToCart('${b.bookID}')">Add to Cart</button>
                         </form>
                     </div>
                 </c:if>
@@ -687,39 +722,90 @@
 
     <!-- JavaScript for Image Carousel -->
     <script>
-                        let currentImageIndex = 0;
-                        const images = document.querySelectorAll('.banner img');
-                        const imageCount = images.length;
+                                let currentImageIndex = 0;
+                                const images = document.querySelectorAll('.banner img');
+                                const imageCount = images.length;
 
-                        function showImage(index) {
-                            images.forEach((img, i) => {
-                                if (i === index) {
-                                    img.classList.remove('inactive', 'previous');
-                                    img.classList.add('active');
-                                } else if (i < index) {
-                                    img.classList.remove('active', 'inactive');
-                                    img.classList.add('previous');
-                                } else {
-                                    img.classList.remove('active', 'previous');
-                                    img.classList.add('inactive');
+                                function showImage(index) {
+                                    images.forEach((img, i) => {
+                                        if (i === index) {
+                                            img.classList.remove('inactive', 'previous');
+                                            img.classList.add('active');
+                                        } else if (i < index) {
+                                            img.classList.remove('active', 'inactive');
+                                            img.classList.add('previous');
+                                        } else {
+                                            img.classList.remove('active', 'previous');
+                                            img.classList.add('inactive');
+                                        }
+                                    });
                                 }
-                            });
-                        }
 
-                        function prevImage() {
-                            currentImageIndex = (currentImageIndex - 1 + imageCount) % imageCount;
-                            showImage(currentImageIndex);
-                        }
+                                function prevImage() {
+                                    currentImageIndex = (currentImageIndex - 1 + imageCount) % imageCount;
+                                    showImage(currentImageIndex);
+                                }
 
-                        function nextImage() {
-                            currentImageIndex = (currentImageIndex + 1) % imageCount;
-                            showImage(currentImageIndex);
-                        }
+                                function nextImage() {
+                                    currentImageIndex = (currentImageIndex + 1) % imageCount;
+                                    showImage(currentImageIndex);
+                                }
 
-                        // Automatic image transition every 4 seconds
-                        setInterval(nextImage, 4000);
+                                // Automatic image transition every 4 seconds
+                                setInterval(nextImage, 4000);
     </script>
 
+    <script>
+        // Cart notification function
+        function showNotification(message) {
+            let notification = document.createElement("div");
+            notification.className = "cart-notification";
+
+            // Add error class for error messages
+            if (message.includes("❌") || message.includes("Error") || message.includes("Lỗi")) {
+                notification.classList.add("error");
+            }
+
+            notification.innerText = message;
+            document.body.appendChild(notification);
+
+            // Remove after animation completes (5 seconds total)
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Add to cart function
+        function addToCart(bookID) {
+            fetch("CartController", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "action=add&bookId=" + encodeURIComponent(bookID),
+            })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showNotification("✔ Product has been added to cart!");
+                        } else {
+                            showNotification("❌ Error: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        showNotification("❌ Connection error!");
+                    });
+        }
+
+        // Check for cart message on page load
+        document.addEventListener('DOMContentLoaded', function () {
+        <% if (session.getAttribute("cartMessage") != null) {%>
+            showNotification("<%= session.getAttribute("cartMessage")%>");
+        <% session.removeAttribute("cartMessage"); %>
+        <% }%>
+        });
+    </script>
 
 </body>
 </html>

@@ -189,23 +189,9 @@ public class CustomerDAO extends DBContext {
         return cus;
     }
 
-    // Khóa tài khoản khách hàng (Locked)
-    public void lockCustomer(String id) {
-        String sql = "UPDATE Customers SET Status = 'Locked' WHERE CustomerID = ?";
-
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, id);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Mở khóa tài khoản khách hàng (Active)
-    public void unlockCustomer(String id) {
-        String sql = "UPDATE Customers SET Status = 'Active' WHERE CustomerID = ?";
+    // Xóa tài khoản khách hàng
+    public void deleteCustomer(String id) {
+        String sql = "UPDATE Customers SET Status = 'Unactive' WHERE CustomerID = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);

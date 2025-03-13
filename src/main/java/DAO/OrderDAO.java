@@ -220,6 +220,40 @@ public class OrderDAO extends DBContext {
         return books;
     }
 
+    //QUOC
+    // Thêm đơn hàng mới, không nhập staffID (để null)
+    public String createOrder(Orders order) {
+        String getMaxOrderIDSQL = "SELECT MAX(CAST(SUBSTRING(orderID, 2, LEN(orderID)) AS INT)) FROM Orders";
+        String insertSQL = "INSERT INTO Orders (orderID, customerID, staffID, orderDate, voucherID, value, unitID, orderCompleteDate, orderStatus) "
+                + "VALUES (?, ?, NULL, ?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement getMaxSt = connection.prepareStatement(getMaxOrderIDSQL);  PreparedStatement insertSt = connection.prepareStatement(insertSQL)) {
+            // Get the current max ID
+            ResultSet rs = getMaxSt.executeQuery();
+            int newIDNumber = 1; // Default if database has no orders
+            if (rs.next() && rs.getInt(1) > 0) {
+                newIDNumber = rs.getInt(1) + 1; // Increment ID by 1
+            }
+            String newOrderID = "O" + newIDNumber; // Create new ID
+            // Set values for INSERT
+            insertSt.setString(1, newOrderID);
+            insertSt.setString(2, order.getCustomerID());
+            insertSt.setDate(3, new java.sql.Date(order.getOrderDate().getTime()));
+            insertSt.setString(4, order.getVoucherID());
+            insertSt.setDouble(5, order.getValue());
+            insertSt.setString(6, order.getUnitID());
+            insertSt.setDate(7, order.getOrderCompleteDate() != null
+                    ? new java.sql.Date(order.getOrderCompleteDate().getTime()) : null);
+            insertSt.setString(8, order.getOrderStatus());
+            int rowsInserted = insertSt.executeUpdate();
+            if (rowsInserted > 0) {
+                return newOrderID; // Return the newly created orderID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if there was an error
+    }
+
     public static void main(String[] args) {
 
     }
