@@ -249,6 +249,50 @@
             .policy-links a:hover {
                 text-decoration: underline;
             }
+            
+            /* --- PHẦN FEEDBACK --- */
+            .feedback-section {
+                margin-top: 40px;
+                padding: 20px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .feedback-item {
+                border-bottom: 1px solid #ddd;
+                padding: 15px 0;
+                transition: background-color 0.3s;
+            }
+
+            .feedback-item:hover {
+                background-color: #f1f1f1;
+            }
+
+            .customer-name {
+                font-weight: bold;
+                font-size: 16px;
+                color: #222;
+            }
+
+            .stars {
+                color: #FFD700;
+                font-size: 18px;
+            }
+
+            .stars .active {
+                color: #ffcc00; /* Vàng cho sao đã chọn */
+            }
+
+            .stars .inactive {
+                color: #ccc; /* Xám cho sao chưa chọn */
+            }
+
+            .feedback-content {
+                margin-top: 5px;
+                font-size: 14px;
+                color: #444;
+            }
 
             .footer-bottom {
                 color: #888;
@@ -329,6 +373,33 @@
                     
                 </div>
             </div>
+        </div>
+        
+                        <!-- Feedback Section -->
+        <div class="feedback-section">
+            <h2>Feedback</h2>
+
+            <c:choose>
+                <c:when test="${empty feedbackList}">
+                    <p>No feedback available for this product.</p>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="feedback" items="${feedbackList}">
+                        <div class="feedback-item">
+                            <p class="customer-name">${feedback.CustomerName}</p>
+
+                            <!-- Hiển thị số sao đúng với feedback -->
+                            <div class="stars">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <i class="fas fa-star ${i <= feedback.Star ? 'active' : 'inactive'}"></i>
+                                </c:forEach>
+                            </div>
+
+                            <p class="feedback-content">${feedback.Detail}</p>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <!-- Footer Section -->

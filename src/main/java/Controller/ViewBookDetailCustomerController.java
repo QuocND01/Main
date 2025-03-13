@@ -7,6 +7,7 @@ package Controller;
 import DAO.AuthorDAO;
 import DAO.BookDAO;
 import DAO.CategoryDAO;
+import DAO.FeedbackDAO;
 import Model.Authors;
 import Model.Books;
 import Model.Categorys;
@@ -18,6 +19,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -45,12 +48,15 @@ public class ViewBookDetailCustomerController extends HttpServlet {
          CategoryDAO c = new CategoryDAO();
          ArrayList<Categorys> cata = new ArrayList<Categorys>();
          ArrayList<Authors> au = new ArrayList<Authors>();
+         FeedbackDAO feedbackDAO = new FeedbackDAO();
+         List<Map<String, Object>> feedbackList = feedbackDAO.getFeedbackByBookId(BookID);
         Books book = b.getBookByBookID(BookID);
         cata = c.getAllCategorys();
         au = a.getAllAuthor();
         request.setAttribute("detailBook", book);
         request.setAttribute("cata", cata);
         request.setAttribute("author", au);
+        request.setAttribute("feedbackList", feedbackList);
         request.getRequestDispatcher("ViewBookDetailCustomer.jsp").forward(request, response);
     }
 
