@@ -258,141 +258,150 @@
         </div>
 
         <div class="main-actions d-flex justify-content-between mb-4">
-            <a href="InsertBookView.jsp" class="btn">Insert Book</a>
+
             <form action="viewBookController" method="post">
                 <button type="submit" class="btn">All Order</button>
             </form>
             <form action="view-new-order" method="post">
                 <button type="submit" class="btn">New Orders</button>
             </form>
-            <form action="ViewListCustomersController" method="get">
-                <button type="submit" class="btn">All Customer</button>
+            <form action="ManageCustomersController" method="get">
+                <button type="submit" class="btn">Manage Customers</button>
+            </form>
+            <a href="VoucherController" class="btn">Manage Vouchers</a>
+            <a href="DeliveryunitController" class="btn">Manage Delivery Units</a>
+            <form action="viewCategory" method="get">
+                <button type="submit" class="btn">Categories</button>
+            </form>
+            <form action="ViewWarehouseController" method="get">
+                <button type="submit" class="btn">View Warehouse</button>
+            </form>  
+            <form action="AuthorController" method="get">
+                <button type="submit" class="btn">View Authors</button>
             </form>
             <!-- Chỉ hiển thị với Admin -->
             <c:if test="${role == 'Admin'}">
                 <form action="viewstaff" method="post">
                     <button type="submit" class="btn">All Staff</button>
                 </form>
+                <a href="InsertBookView.jsp" class="btn">Insert Book</a>
+
             </c:if>
         </div>
-        <form action="viewCategory" method="get">
-            <button type="submit" class="btn">Categories</button>
-        </form>
-        <form action="ViewWarehouseController" method="get">
-            <button type="submit" class="btn">View Warehouse</button>
-        </form>  
-        <form action="AuthorController" method="get">
-            <button type="submit" class="btn">View Authors</button>
-        </form>
-    </div>
+        <div class="container">
+            <h1>Book List</h1>
 
 
-    <div class="container">
-        <h1>Book List</h1>
-
-
-        <c:if test="${not empty l}">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Book Name</th>
-                        <th>Supplier Name</th>
-                        <th>Author</th>
-                        <th>Publication Year</th>
-                        <th>Weight</th>
-                        <th>Size</th>
-                        <th>Pages</th>
-                        <th>Form</th>
-                        <th>Describe</th>
-                        <th>Image</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Category</th><!-- Added Quantity column -->
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="b" items="${l}">
+            <c:if test="${not empty l}">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <td>${b.bookName}</td>
-                            <td>${b.supplierName}</td>
-                            <c:forEach items="${author}" var="a">
-                                <c:if test = "${a.authorID == b.authorID}">
-                                    <td>${a.authorName}</td>
+                            <th>Book Name</th>
+                            <th>Supplier Name</th>
+                            <th>Author</th>
+                            <th>Publication Year</th>
+                            <th>Weight</th>
+                            <th>Size</th>
+                            <th>Pages</th>
+                            <th>Form</th>
+                            <th>Describe</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Category</th><!-- Added Quantity column -->
+                                <c:if test="${role == 'Admin'}">
+                                <th>Action</th>
                                 </c:if>
-                            </c:forEach>
-                            <td>${b.yearOfPublication}</td>
-                            <td>${b.weight}</td>
-                            <td>${b.size}</td>
-                            <td>${b.numberOfPages}</td>
-                            <td>${b.form}</td>
-                            <td>
-                                <div class="description" id="desc-${b.bookID}">${b.describe}</div>
-                                <span class="read-more" id="read-more-${b.bookID}" onclick="toggleDescription('${b.bookID}')">Read more</span>
-                            </td>
-                            <td>
-                                <img src="${b.image}" alt="${b.bookName}" class="img-thumbnail" onclick="openImageModal('${b.image}')">
-                            </td>
-                            <td>${b.price}</td>
-                            <td>${b.quantity}</td>
-                            <c:forEach items="${category}" var="c">
-                                <c:if test = "${c.categoryID == b.categoryID}">
-                                    <td class="card-text">${c.categoryName}</td>
-                                </c:if>
-                            </c:forEach>
-                            <td class="actions">
-                                <a href="updateBookController?BookID=${b.bookID}" class="btn btn-update">Update</a>
-                                <button class="btn btn-delete" onclick="doDelete('${b.bookID}')">Delete</button>
-                            </td>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-    </div>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="b" items="${l}">
+                            <tr>
+                                <td>${b.bookName}</td>
+                                <td>${b.supplierName}</td>
+                                <c:forEach items="${author}" var="a">
+                                    <c:if test = "${a.authorID == b.authorID}">
+                                        <td>${a.authorName}</td>
+                                    </c:if>
+                                </c:forEach>
+                                <td>${b.yearOfPublication}</td>
+                                <td>${b.weight}</td>
+                                <td>${b.size}</td>
+                                <td>${b.numberOfPages}</td>
+                                <td>${b.form}</td>
+                                <td>
+                                    <div class="description" id="desc-${b.bookID}">${b.describe}</div>
+                                    <span class="read-more" id="read-more-${b.bookID}" onclick="toggleDescription('${b.bookID}')">Read more</span>
+                                </td>
+                                <td>
+                                    <img src="${b.image}" alt="${b.bookName}" class="img-thumbnail" onclick="openImageModal('${b.image}')">
+                                </td>
+                                <td>${b.price}</td>
+                                <td>${b.quantity}</td>
+                                <c:forEach items="${category}" var="c">
+                                    <c:if test = "${c.categoryID == b.categoryID}">
+                                        <td class="card-text">${c.categoryName}</td>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${role == 'Admin'}">
+                                    <td class="actions">
+                                        <a href="updateBookController?BookID=${b.bookID}" class="btn btn-update">Update</a>
+                                        <button class="btn btn-delete" onclick="doDelete('${b.bookID}')">Delete</button>
+                                    </td>
+                                </c:if>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </div>
 
-    <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">Book Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img id="modalImage" src="" alt="Book Image" class="img-fluid">
+        <!-- Image Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel">Book Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" alt="Book Image" class="img-fluid">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Bootstrap and Font Awesome JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-                                    function doDelete(book) {
-                                        if (confirm("Do you want to delete the book with ID: " + book + "?")) {
-                                            window.location = 'deleteBookController?BookID=' + book;
+
+
+
+
+        <!-- Bootstrap and Font Awesome JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+                                        function doDelete(book) {
+                                            if (confirm("Do you want to delete the book with ID: " + book + "?")) {
+                                                window.location = 'deleteBookController?BookID=' + book;
+                                            }
                                         }
-                                    }
 
-                                    function toggleDescription(bookID) {
-                                        var descElement = document.getElementById("desc-" + bookID);
-                                        var readMoreElement = document.getElementById("read-more-" + bookID);
+                                        function toggleDescription(bookID) {
+                                            var descElement = document.getElementById("desc-" + bookID);
+                                            var readMoreElement = document.getElementById("read-more-" + bookID);
 
-                                        if (descElement.style.maxHeight === "35px" || descElement.style.maxHeight === "") {
-                                            descElement.style.maxHeight = "none"; // Hiển thị đầy đủ nội dung
-                                            readMoreElement.textContent = "Read less"; // Đổi thành "Read less"
-                                        } else {
-                                            descElement.style.maxHeight = "35px"; // Thu nhỏ lại
-                                            readMoreElement.textContent = "Read more"; // Đổi lại "Read more"
+                                            if (descElement.style.maxHeight === "35px" || descElement.style.maxHeight === "") {
+                                                descElement.style.maxHeight = "none"; // Hiển thị đầy đủ nội dung
+                                                readMoreElement.textContent = "Read less"; // Đổi thành "Read less"
+                                            } else {
+                                                descElement.style.maxHeight = "35px"; // Thu nhỏ lại
+                                                readMoreElement.textContent = "Read more"; // Đổi lại "Read more"
+                                            }
                                         }
-                                    }
 
-    </script>
-</body>
+        </script>
+    </body>
 </html>

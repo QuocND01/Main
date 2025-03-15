@@ -6,20 +6,21 @@ package Model;
 
 /**
  *
- * @author Long Ho
+ * @author QuocNHMCE182015
  */
 public class Vouchers {
+    
     private String voucherID;
-    private String voucherName;
+    private String voucher;
     private int value;
     private String status;
 
     public Vouchers() {
     }
 
-    public Vouchers(String voucherID, String voucherName, int value, String status) {
+    public Vouchers(String voucherID, String voucher, int value, String status) {
         this.voucherID = voucherID;
-        this.voucherName = voucherName;
+        this.voucher = voucher;
         this.value = value;
         this.status = status;
     }
@@ -32,12 +33,12 @@ public class Vouchers {
         this.voucherID = voucherID;
     }
 
-    public String getVoucherName() {
-        return voucherName;
+    public String getVoucher() {
+        return voucher;
     }
 
-    public void setVoucherName(String voucherName) {
-        this.voucherName = voucherName;
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
     }
 
     public int getValue() {
@@ -58,8 +59,7 @@ public class Vouchers {
 
     @Override
     public String toString() {
-        return "Vouchers{" + "voucherID=" + voucherID + ", voucherName=" + voucherName + ", value=" + value + ", status=" + status + '}';
+        return "Vouchers{" + "voucherID=" + voucherID + ", voucher=" + voucher + ", value=" + value + ", status=" + status + '}';
     }
-
     
 }

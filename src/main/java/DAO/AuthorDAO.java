@@ -20,7 +20,7 @@ public class AuthorDAO extends DBContext.DBContext{
     }
      public ArrayList<Authors> getAllAuthor() {
         ArrayList<Authors> list = new ArrayList<>();
-        String sql = "SELECT * FROM Authors";
+        String sql = "SELECT * FROM Authors WHERE Status = 'Active'";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

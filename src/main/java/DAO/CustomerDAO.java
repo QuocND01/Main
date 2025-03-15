@@ -119,11 +119,11 @@ public class CustomerDAO extends DBContext {
         String updateQuery = "UPDATE Customers SET CustomerName = ?, CustomerEmail = ?, CustomerPNB = ?, CustomerAddress = ? WHERE CustomerID = ?";
 
         try ( PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-             ps.setString(1, customer.getCustomerName());
-        ps.setString(2, customer.getCustomerEmail());
-        ps.setString(3, customer.getCustomerPNB());
-        ps.setString(4, customer.getCustomerAddress());
-        ps.setString(5, customer.getCustomerID()); // Chỉ cập nhật theo CustomerID
+            ps.setString(1, customer.getCustomerName());
+            ps.setString(2, customer.getCustomerEmail());
+            ps.setString(3, customer.getCustomerPNB());
+            ps.setString(4, customer.getCustomerAddress());
+            ps.setString(5, customer.getCustomerID()); // Chỉ cập nhật theo CustomerID
 
             int rowsUpdated = ps.executeUpdate();
             return rowsUpdated > 0;  // Trả về true nếu ít nhất 1 bản ghi đã được cập nhật
@@ -132,7 +132,7 @@ public class CustomerDAO extends DBContext {
         }
         return false;  // Trả về false nếu không có bản ghi nào được cập nhật
     }
-    
+
     // Lấy danh sách tất cả khách hàng
     public ArrayList<Customers> getAllCustomers() {
         ArrayList<Customers> list = new ArrayList<>();
@@ -206,6 +206,20 @@ public class CustomerDAO extends DBContext {
     // Mở khóa tài khoản khách hàng (Active)
     public void unlockCustomer(String id) {
         String sql = "UPDATE Customers SET Status = 'Active' WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Xóa tài khoản khách hàng
+    public void deleteCustomer(String id) {
+        String sql = "UPDATE Customers SET Status = 'Unactive' WHERE CustomerID = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
