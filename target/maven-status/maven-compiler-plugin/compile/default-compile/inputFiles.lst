@@ -1,58 +1,72 @@
-E:\New folder\Main\src\main\java\Controller\UpdateCategoryController.java
-E:\New folder\Main\src\main\java\DAO\OrderDetailsDAO.java
-E:\New folder\Main\src\main\java\Controller\FillerBookByCategoryController.java
-E:\New folder\Main\src\main\java\Controller\UpdateCusProfile.java
-E:\New folder\Main\src\main\java\DBContext\DBContext.java
-E:\New folder\Main\src\main\java\Model\OrderDetails.java
-E:\New folder\Main\src\main\java\Controller\ViewBookDetailCustomerController.java
-E:\New folder\Main\src\main\java\Controller\SearchCategoryController.java
-E:\New folder\Main\src\main\java\Controller\CancelOrderController.java
-E:\New folder\Main\src\main\java\Controller\ViewCustomerDetailsController.java
-E:\New folder\Main\src\main\java\DAO\BookDAO.java
-E:\New folder\Main\src\main\java\DAO\StaffDAO.java
-E:\New folder\Main\src\main\java\Controller\DeleteFeedbackController.java
-E:\New folder\Main\src\main\java\DAO\CustomerDAO.java
-E:\New folder\Main\src\main\java\Controller\BlockStaffAccountController.java
-E:\New folder\Main\src\main\java\Controller\ProfileController.java
-E:\New folder\Main\src\main\java\Controller\ViewNewOrderController.java
-E:\New folder\Main\src\main\java\DAO\AuthorDAO.java
-E:\New folder\Main\src\main\java\Model\Deliveryunits.java
-E:\New folder\Main\src\main\java\Model\Staffs.java
-E:\New folder\Main\src\main\java\Controller\AddBookController.java
-E:\New folder\Main\src\main\java\Controller\UpdateBookController.java
-E:\New folder\Main\src\main\java\Controller\ViewBookDetailAdminController.java
-E:\New folder\Main\src\main\java\Controller\ViewBookAdminController.java
-E:\New folder\Main\src\main\java\Controller\ViewOrderDetailController.java
-E:\New folder\Main\src\main\java\Controller\StaffDetailController.java
-E:\New folder\Main\src\main\java\Controller\ForgetPasswordController.java
-E:\New folder\Main\src\main\java\Model\Books.java
-E:\New folder\Main\src\main\java\Controller\ViewStaffAccountController.java
-E:\New folder\Main\src\main\java\Model\Authors.java
-E:\New folder\Main\src\main\java\Controller\LogoutController.java
-E:\New folder\Main\src\main\java\Controller\ViewNewBookController.java
-E:\New folder\Main\src\main\java\Controller\AddStaffController.java
-E:\New folder\Main\src\main\java\Controller\ViewCategoryController.java
-E:\New folder\Main\src\main\java\DAO\FeedbackDAO.java
-E:\New folder\Main\src\main\java\Controller\UpdateFeedbackController.java
-E:\New folder\Main\src\main\java\Controller\UpdateStaffController.java
-E:\New folder\Main\src\main\java\Controller\SearchBookAdminController.java
-E:\New folder\Main\src\main\java\Controller\ViewOrderController.java
-E:\New folder\Main\src\main\java\DAO\OrderDAO.java
-E:\New folder\Main\src\main\java\Controller\SearchBookCustomerController.java
-E:\New folder\Main\src\main\java\Model\Vouchers.java
-E:\New folder\Main\src\main\java\Controller\FeedbackPageController.java
-E:\New folder\Main\src\main\java\Controller\ChangeStatusOrderByAdminOrStaffController.java
-E:\New folder\Main\src\main\java\Model\Feedbacks.java
-E:\New folder\Main\src\main\java\Model\Categorys.java
-E:\New folder\Main\src\main\java\DAO\CategoryDAO.java
-E:\New folder\Main\src\main\java\Controller\ViewBookCustomerController.java
-E:\New folder\Main\src\main\java\Model\Orders.java
-E:\New folder\Main\src\main\java\Controller\ViewHotBookController.java
-E:\New folder\Main\src\main\java\Controller\ViewListCustomersController.java
-E:\New folder\Main\src\main\java\Controller\DeleteBookController.java
-E:\New folder\Main\src\main\java\Controller\WriteFeedbackController.java
-E:\New folder\Main\src\main\java\Controller\RegisterController.java
-E:\New folder\Main\src\main\java\Controller\AddCategoryController.java
-E:\New folder\Main\src\main\java\Controller\LoginController.java
-E:\New folder\Main\src\main\java\Controller\DeleteCategoryController.java
-E:\New folder\Main\src\main\java\Model\Customers.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewBookDetailAdminController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\CreateOrderController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewStaffAccountController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\OrderDetails.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewOrderController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Cart.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Customers.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\FeedbackDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\RegisterController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Feedbacks.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\LogoutController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Deliveryunits.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ProfileController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\WriteFeedbackController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\AddBookController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\BlockStaffAccountController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\UpdateFeedbackController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\UpdateCusProfile.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewCustomerDetailsController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\CancelOrderController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\CartDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\OrderDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\AddStaffController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\CartController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\UpdateStaffController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Categorys.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\StaffDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\FillerBookByCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\LoginController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\WarehouseDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\CategoryDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\DeleteCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\WarehouseDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\UpdateBookController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\AuthorController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ManageCustomersController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\CustomerDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewNewBookController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewNewOrderController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\FeedbackPageController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\VoucherController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewBookDetailCustomerController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Warehouse.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\SearchCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\AddCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Books.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\DeliveryunitController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\StaffDetailController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewBookCustomerController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\BookDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewBookAdminController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\AuthorDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\UpdateCategoryController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\SearchBookAdminController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewHotBookController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\DeleteFeedbackController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewWarehouseController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\DeliveryunitDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DBContext\DBContext.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\DeleteBookController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Authors.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Orders.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ChangeStatusOrderByAdminOrStaffController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\SearchBookCustomerController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\OrderDetailDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewListCustomersController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Vouchers.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ForgetPasswordController.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\DAO\VoucherDAO.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Model\Staffs.java
+D:\Ky5\SWP\project\10JQKA\Main\src\main\java\Controller\ViewOrderDetailController.java

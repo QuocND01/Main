@@ -403,6 +403,19 @@ public class BookDAO extends DBContext.DBContext {
         return null;
     }
 
+    public boolean updateBookStock(String bookID, int quantity) {
+        String sql = "UPDATE Books SET Quantity = Quantity - ? WHERE BookID = ?";
+        try ( PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, quantity);
+            st.setString(2, bookID);
+            int rowsUpdated = st.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         BookDAO dao = new BookDAO();
         ArrayList<Books> list = new ArrayList();

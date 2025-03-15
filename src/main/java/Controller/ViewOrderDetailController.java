@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import DAO.OrderDetailsDAO;
+import DAO.OrderDetailDAO;
 import Model.Books;
 import Model.Deliveryunits;
 import Model.OrderDetails;
@@ -70,7 +70,7 @@ public class ViewOrderDetailController extends HttpServlet {
             return;
         }
 
-        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
+        OrderDetailDAO orderDetailsDAO = new OrderDetailDAO();
 
 // Lấy thông tin đơn hàng
         Orders order = orderDetailsDAO.getOrderInfo(orderID);

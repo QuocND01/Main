@@ -54,32 +54,32 @@ public class OrderDAO extends DBContext {
     }
 
     public ArrayList<OrderDetails> getOrderDetailsByOrderID(String orderID) {
-    ArrayList<OrderDetails> orderDetails = new ArrayList<>();
-    String sql = "SELECT od.OrderDetailID, od.OrderID, od.BookID, od.Quantity, od.Price, b.BookName "
-               + "FROM OrderDetails od "
-               + "JOIN Books b ON od.BookID = b.BookID "
-               + "WHERE od.OrderID = ?";
-    
-    try (PreparedStatement st = connection.prepareStatement(sql)) {
-        st.setString(1, orderID);
-        ResultSet rs = st.executeQuery();
+        ArrayList<OrderDetails> orderDetails = new ArrayList<>();
+        String sql = "SELECT od.OrderDetailID, od.OrderID, od.BookID, od.Quantity, od.Price, b.BookName "
+                + "FROM OrderDetails od "
+                + "JOIN Books b ON od.BookID = b.BookID "
+                + "WHERE od.OrderID = ?";
 
-        while (rs.next()) {
-            OrderDetails orderDetail = new OrderDetails(
-                    rs.getString("OrderDetailID"),
-                    rs.getString("OrderID"),
-                    rs.getString("BookID"),
-                    rs.getInt("Quantity"),
-                    rs.getDouble("Price")
-            );
-            orderDetails.add(orderDetail);
+        try ( PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, orderID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                OrderDetails orderDetail = new OrderDetails(
+                        rs.getString("OrderDetailID"),
+                        rs.getString("OrderID"),
+                        rs.getString("BookID"),
+                        rs.getInt("Quantity"),
+                        rs.getDouble("Price")
+                );
+                orderDetails.add(orderDetail);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        rs.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return orderDetails;
     }
-    return orderDetails;
-}
 
     public List<Map<String, Object>> getNewOrders() {
         List<Map<String, Object>> orders = new ArrayList<>();
@@ -221,23 +221,57 @@ public class OrderDAO extends DBContext {
     }
 
     public String getBookNameByID(String bookID) {
-    String bookName = null;
-    String sql = "SELECT BookName FROM Books WHERE BookID = ?";
+        String bookName = null;
+        String sql = "SELECT BookName FROM Books WHERE BookID = ?";
 
-    try (PreparedStatement st = connection.prepareStatement(sql)) {
-        st.setString(1, bookID);
-        ResultSet rs = st.executeQuery();
+        try ( PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, bookID);
+            ResultSet rs = st.executeQuery();
 
-        if (rs.next()) {
-            bookName = rs.getString("BookName");
+            if (rs.next()) {
+                bookName = rs.getString("BookName");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        rs.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return bookName;
     }
 
-    return bookName;
-}
+    // Thêm đơn hàng mới, không nhập staffID (để null)
+    public String createOrder(Orders order) {
+        String getMaxOrderIDSQL = "SELECT MAX(CAST(SUBSTRING(orderID, 2, LEN(orderID)) AS INT)) FROM Orders";
+        String insertSQL = "INSERT INTO Orders (orderID, customerID, staffID, orderDate, voucherID, value, unitID, orderCompleteDate, orderStatus) "
+                + "VALUES (?, ?, NULL, ?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement getMaxSt = connection.prepareStatement(getMaxOrderIDSQL);  PreparedStatement insertSt = connection.prepareStatement(insertSQL)) {
+            // Get the current max ID
+            ResultSet rs = getMaxSt.executeQuery();
+            int newIDNumber = 1; // Default if database has no orders
+            if (rs.next() && rs.getInt(1) > 0) {
+                newIDNumber = rs.getInt(1) + 1; // Increment ID by 1
+            }
+            String newOrderID = "O" + newIDNumber; // Create new ID
+            // Set values for INSERT
+            insertSt.setString(1, newOrderID);
+            insertSt.setString(2, order.getCustomerID());
+            insertSt.setDate(3, new java.sql.Date(order.getOrderDate().getTime()));
+            insertSt.setString(4, order.getVoucherID());
+            insertSt.setDouble(5, order.getValue());
+            insertSt.setString(6, order.getUnitID());
+            insertSt.setDate(7, order.getOrderCompleteDate() != null
+                    ? new java.sql.Date(order.getOrderCompleteDate().getTime()) : null);
+            insertSt.setString(8, order.getOrderStatus());
+            int rowsInserted = insertSt.executeUpdate();
+            if (rowsInserted > 0) {
+                return newOrderID; // Return the newly created orderID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if there was an error
+    }
+
     public static void main(String[] args) {
 
     }

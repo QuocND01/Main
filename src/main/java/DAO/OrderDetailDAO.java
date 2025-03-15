@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Long Ho
  */
-public class OrderDetailsDAO extends DBContext {
+public class OrderDetailDAO extends DBContext {
 
     public List<OrderDetails> getOrderDetailsByOrderID(String orderID) {
         List<OrderDetails> detailsList = new ArrayList<>();
@@ -101,33 +101,67 @@ public class OrderDetailsDAO extends DBContext {
         }
         return order;
     }
-    
+
     public Vouchers getVoucherInfo(String voucherID) {
-    Vouchers voucher = null;
-    if (voucherID == null || voucherID.isEmpty()) {
-        return null;
+        Vouchers voucher = null;
+        if (voucherID == null || voucherID.isEmpty()) {
+            return null;
+        }
+
+        String query = "SELECT * FROM Vouchers WHERE VoucherID = ?";
+        try ( PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, voucherID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                voucher = new Vouchers();
+                voucher.setVoucherID(rs.getString("VoucherID"));
+                voucher.setVoucher(rs.getString("Voucher"));
+                voucher.setValue(rs.getInt("Value"));
+                voucher.setStatus(rs.getString("Status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return voucher;
     }
 
-    String query = "SELECT * FROM Vouchers WHERE VoucherID = ?";
-    try (PreparedStatement ps = connection.prepareStatement(query)) {
-        ps.setString(1, voucherID);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            voucher = new Vouchers();
-            voucher.setVoucherID(rs.getString("VoucherID"));
-            voucher.setVoucherName(rs.getString("Voucher"));
-            voucher.setValue(rs.getInt("Value"));
-            voucher.setStatus(rs.getString("Status"));
+    // Create a new order detail
+    public boolean createOrderDetail(OrderDetails orderDetail) {
+        // Query to get the max OrderDetailID
+        String getMaxOrderDetailIDSQL = "SELECT MAX(CAST(SUBSTRING(orderDetailID, 3, LEN(orderDetailID)) AS INT)) FROM OrderDetails";
+        // Insert SQL
+        String insertSQL = "INSERT INTO OrderDetails (orderDetailID, orderID, bookID, quantity, price) VALUES (?, ?, ?, ?, ?)";
+
+        try ( PreparedStatement getMaxSt = connection.prepareStatement(getMaxOrderDetailIDSQL);  PreparedStatement insertSt = connection.prepareStatement(insertSQL)) {
+
+            // Get the current max ID
+            ResultSet rs = getMaxSt.executeQuery();
+            int newIDNumber = 1; // Default if database has no order details
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                newIDNumber = rs.getInt(1) + 1; // Increment ID by 1
+            }
+
+            String newOrderDetailID = "OD" + newIDNumber; // Create new ID
+
+            // Set values for INSERT
+            insertSt.setString(1, newOrderDetailID);
+            insertSt.setString(2, orderDetail.getOrderID());
+            insertSt.setString(3, orderDetail.getBookID());
+            insertSt.setInt(4, orderDetail.getQuantity());
+            insertSt.setDouble(5, orderDetail.getPrice());
+
+            int rowsInserted = insertSt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return false;
     }
-    return voucher;
-}
-    
+
     public static void main(String[] args) {
-        OrderDetailsDAO order = new OrderDetailsDAO();
-        
+        OrderDetailDAO order = new OrderDetailDAO();
+
         Orders o = order.getOrderInfo("O1");
         System.out.println(o);
     }
