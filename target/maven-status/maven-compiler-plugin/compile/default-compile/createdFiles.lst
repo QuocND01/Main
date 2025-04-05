@@ -1,0 +1,3 @@
+Controller\WarehouseDetailsController.class
+DBContext\DBContext.class
+Model\Warehouse.class
