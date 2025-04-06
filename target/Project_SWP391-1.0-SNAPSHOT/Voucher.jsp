@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,6 +9,65 @@
         <title>Manage Vouchers</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <style>
+            body {
+
+                min-height: 100vh;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f7fc;
+                margin-left: 226px;
+                margin-top: 10px;
+                padding: 20px;
+                color: #555;
+            }
+            .header {
+                position: fixed;
+                top: 0;
+                left: 250px;
+                width: calc(100% - 250px);
+                height: 110px;
+                background: #e91e63;
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 20px;
+                z-index: 1000;
+            }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100vh;
+                background: #343a40;
+                padding-top: 20px;
+            }
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                height: 44px;
+            }
+            .sidebar a:hover {
+                background: #495057;
+            }
+            .content {
+                margin-top: 30px;
+                padding: 20px;
+                flex: 1;
+                color: white;
+            }
+
+            .logo img {
+                width: 70px;
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .logo a {
+                height: 90px;
+            }
 
             .status-badge {
                 display: inline-block;
@@ -85,6 +145,11 @@
                 font-family: 'Segoe UI', Arial, sans-serif;
             }
 
+            .main{
+                padding-top: 100px;
+                padding-left: 20px;
+            }
+
             body {
                 background-color: #f0f2f5;
                 color: var(--dark);
@@ -93,19 +158,17 @@
             }
 
             .container {
-                max-width: 1200px;
+                max-width: 1600px;
                 margin: 0 auto;
                 background-color: white;
-                border-radius: var(--border-radius);
                 box-shadow: var(--box-shadow);
+                border-radius: var(--border-radius);
                 padding: 25px;
             }
 
             h1 {
-                color: var(--primary);
                 margin-bottom: 25px;
                 padding-bottom: 15px;
-                border-bottom: 2px solid #eee;
                 text-align: center;
                 font-weight: 600;
             }
@@ -147,10 +210,11 @@
             .btn-danger {
                 background-color: var(--danger);
                 color: white;
+                text-align: center;
             }
 
             .btn-danger:hover {
-                background-color: #b10012;
+                background-color: #dc3545;
                 transform: translateY(-2px);
                 box-shadow: var(--box-shadow);
             }
@@ -176,12 +240,11 @@
             table {
                 width: 100%;
                 border-collapse: collapse;
-                border-radius: var(--border-radius);
                 overflow: hidden;
             }
 
             th {
-                background-color: var(--primary);
+                background-color: #e91e63;
                 color: white;
                 padding: 15px 20px;
                 text-align: left;
@@ -359,80 +422,179 @@
                 justify-content: center;
                 gap: 15px;
             }
+
+            /* Footer */
+            .footer {
+                background-color: #f8f8f8;
+                padding: 20px 0;
+                font-size: 14px;
+                color: #666;
+                text-align: center;
+                border-top: 1px solid #e0e0e0;
+                margin-top:200px;
+            }
+
+            .footer-top {
+                margin-bottom: 10px;
+            }
+
+            .footer-top p {
+                color: #888;
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .country-links a {
+                color: #007bff;
+                margin: 0 5px;
+                text-decoration: none;
+                font-size: 12px;
+            }
+
+            .country-links a:hover {
+                text-decoration: underline;
+            }
+
+            .footer-middle {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .policy-links a {
+                color: #007bff;
+                margin: 0 10px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .policy-links a:hover {
+                text-decoration: underline;
+            }
+
+            .registration-icons img {
+                height: 40px;
+                margin: 0 10px;
+            }
+
+            .footer-bottom {
+                color: #888;
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .footer-bottom a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+            .footer-bottom a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
-        <div class="container">
-
+        <c:set var="role" value="${sessionScope.role}" />
+        <div class="sidebar" id="mySidebar">
             <div class="logo">
-                <a href="/viewBookAdminController">
-                    <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
+                <a href="viewBookAdminController">
+                    <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo" height="40">
                 </a>
-                <h1><i class="fas fa-ticket-alt"></i> Voucher Management</h1>
             </div>
-
-            <!-- For server-side messages -->
-            <c:if test="${not empty message}">
-                <div class="alert alert-${messageType}" id="serverMessage">
-                    <i class="${messageType == 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}"></i> ${message}
-                    <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
-                </div>
-                <script>
-                    // Auto-hide the server message after 5 seconds
-                    setTimeout(function () {
-                        var message = document.getElementById('serverMessage');
-                        if (message) {
-                            message.style.opacity = '0';
-                            setTimeout(function () {
-                                message.remove();
-                            }, 300);
-                        }
-                    }, 5000);
-                </script>
+            <a href="view-new-order">Manage Orders</a>
+            <a href="ManageCustomersController">Manage Customers</a>
+            <a href="VoucherController">Manage Vouchers</a>
+            <c:if test="${role == 'Admin'}">
+                <a href="DeliveryunitController">Manage Delivery Units</a>
+            </c:if>
+            <a href="viewCategory">Manage Categories</a>
+            <a href="WarehouseController">Manage Warehouse</a>
+            <a href="AuthorController">Manage Authors</a>
+            <c:if test="${role == 'Admin'}">
+                <a href="viewstaff">Manage Staff</a>
             </c:if>
 
-            <div class="actions">
-                <button class="btn btn-primary" onclick="openAddPopup()">
-                    <i class="fas fa-plus"></i> Add Voucher
-                </button>
-            </div>
+            <a href="logout" class="btn btn-danger w-100" 
+               style="background-color: #e91e63;
+               color: white;
+               font-size: 16px;
+               text-align: center;
+               border-radius: 12px;"
+               onmouseover="this.style.backgroundColor = '#495057'" 
+               onmouseout="this.style.backgroundColor = '#e91e63'">
+                Logout
+            </a>
 
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Voucher Code</th>
-                            <th>Value</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="v" items="${voucherList}">
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="content">
+                <h1><i class="fas fa-ticket-alt"></i> Voucher Management</h1>
+            </div>
+        </div>
+        <div class="main">
+            <div class="container">
+                <!-- For server-side messages -->
+                <c:if test="${not empty message}">
+                    <div class="alert alert-${messageType}" id="serverMessage">
+                        <i class="${messageType == 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}"></i> ${message}
+                        <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
+                    </div>
+                    <script>
+                        // Auto-hide the server message after 5 seconds
+                        setTimeout(function () {
+                            var message = document.getElementById('serverMessage');
+                            if (message) {
+                                message.style.opacity = '0';
+                                setTimeout(function () {
+                                    message.remove();
+                                }, 300);
+                            }
+                        }, 5000);
+                    </script>
+                </c:if>
+
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="openAddPopup()">
+                        <i class="fas fa-plus"></i> Add Voucher
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>${v.voucherID}</td>
-                                <td><strong>${v.voucher}</strong></td>
-                                <td>${v.value}%</td>
-                                <td>
-                                    <span class="status-badge ${v.status == 'Active' ? 'status-active' : 'status-inactive'}">${v.status}</span>
-                                </td>
-                                <td>
-                                    <c:if test="${v.status == 'Active'}">
-                                        <button class="btn btn-danger" onclick="deactivateVoucher('${v.voucherID}', '${v.voucher}')">
-                                            Delete
-                                        </button>
-                                    </c:if>
-                                    <c:if test="${v.status == 'Inactive'}">
-                                        <button class="btn btn-secondary" disabled>
-                                            <i class="fas fa-ban"></i> Deactivated
-                                        </button>
-                                    </c:if>
-                                </td>
+                                <th>ID</th>
+                                <th>Voucher Code</th>
+                                <th>Value</th>
+                                <th>Actions</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="v" items="${voucherList}">
+                                <tr>
+                                    <td>${v.voucherID}</td>
+                                    <td><strong>${v.voucherName}</strong></td>
+                                    <td>${v.voucherValue}%</td>
+                                    <td>
+                                        <c:if test="${v.voucherStatus == 'Active'}">
+                                            <button class="btn btn-danger" onclick="deactivateVoucher('${v.voucherID}', '${v.voucherName}')">
+                                                Delete
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${v.voucherStatus == 'Inactive'}">
+                                            <button class="btn btn-secondary" disabled>
+                                                <i class="fas fa-ban"></i> Deactivated
+                                            </button>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -446,16 +608,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="value">Value (0-100%):</label>
+                        <label for="value">Value (1-100%):</label>
                         <input type="number" id="value" name="value" placeholder="Enter discount percentage" min="0" max="100" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="status">Status:</label>
-                        <select id="status" name="status">
-                            <option value="Active">Active</option>
-                        </select>
-                    </div>
+                    <input type="hidden" id="status" name="status" value="Active">
 
                     <div id="errorMessage"></div>
 
@@ -519,21 +676,46 @@
                 document.getElementById("addVoucherForm").reset();
             }
 
+            function validateVoucherCode() {
+                var voucherName = document.getElementById("voucherName");
+                var errorMessage = document.getElementById("errorMessage");
+
+                // Remove any spaces from the input value
+                voucherName.value = voucherName.value.replace(/\s+/g, '');
+
+                // Check if the voucher code contains only alphanumeric characters
+                var alphanumericRegex = /^[a-zA-Z0-9]+$/;
+
+                if (!alphanumericRegex.test(voucherName.value) && voucherName.value !== '') {
+                    errorMessage.textContent = "Voucher code must contain only letters and numbers!!!";
+                    errorMessage.style.display = "block";
+                    return false;
+                } else {
+                    errorMessage.style.display = "none";
+                    return true;
+                }
+            }
+
             function addVoucher() {
                 var voucherName = document.getElementById("voucherName").value;
                 var value = document.getElementById("value").value;
                 var status = document.getElementById("status").value;
                 var errorMessage = document.getElementById("errorMessage");
 
-                // Reset thông báo lỗi trước khi kiểm tra
+                // Reset error message
                 errorMessage.style.display = "none";
                 errorMessage.textContent = "";
 
-                // Kiểm tra giá trị value hợp lệ
+                // Validate voucher code format
+                if (!validateVoucherCode()) {
+                    return; // Stop if validation fails
+                }
+
+                // Validate value range
                 if (value < 0 || value > 100) {
-                    errorMessage.textContent = "Value must be between 0 and 100!";
+                    errorMessage.textContent = "Value must be between 1 and 100!";
                     errorMessage.style.display = "block";
-                    return; // Dừng việc gửi request nếu sai
+                    return;
                 }
 
                 var xhr = new XMLHttpRequest();
@@ -546,7 +728,7 @@
                         var response = xhr.responseText.trim();
 
                         if (response === "invalid_value") {
-                            errorMessage.textContent = "Value must be between 0 and 100!";
+                            errorMessage.textContent = "Value must be between 1 and 100!";
                             errorMessage.style.display = "block";
                         } else if (response === "error") {
                             errorMessage.textContent = "Duplicate voucher!";
@@ -554,21 +736,7 @@
                         } else if (response === "success") {
                             closeAddPopup();
 
-                            // Create and show success message
-                            var container = document.querySelector('.container');
-                            var h1 = container.querySelector('h1');
-
-                            var alertDiv = document.createElement('div');
-                            alertDiv.className = 'alert alert-success';
-                            alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> Voucher added successfully!';
-
-                            // Insert after h1
-                            h1.parentNode.insertBefore(alertDiv, h1.nextSibling);
-
-                            // Refresh voucher list
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1000); // Show message for 1 second before refreshing
+                            window.location.href = "VoucherController?postRedirect=true";
                         }
                     }
                 };
@@ -609,6 +777,22 @@
                 }, 5000);
             }
 
+            document.addEventListener('DOMContentLoaded', function () {
+                var voucherNameInput = document.getElementById('voucherName');
+
+                // Add input event listener to validate in real-time
+                voucherNameInput.addEventListener('input', function () {
+                    validateVoucherCode();
+                });
+
+                // Add form submit event listener
+                var addVoucherForm = document.getElementById('addVoucherForm');
+                addVoucherForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    addVoucher();
+                });
+            });
+
         </script>
 
         <!-- Deactivate Confirmation Popup (optional, can be used instead of the JavaScript confirm) -->
@@ -620,12 +804,37 @@
 
                 <div class="delete-buttons">
                     <button type="button" class="btn btn-danger" id="confirm-deactivate-btn">
-                        <i class="fas fa-ban"></i> Deactivate
+                        <i class="fas fa-ban"></i> Delete
                     </button>
                     <button type="button" class="btn btn-secondary" onclick="hidePopup('deactivate-overlay')">
                         <i class="fas fa-times"></i> Cancel
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-top">
+                <p>© 2024 FPT Book Store. All rights reserved.</p>
+                <div class="country-links">
+                    <a href="#">Singapore</a> | <a href="#">Indonesia</a> | <a href="#">Thailand</a> | 
+                    <a href="#">Malaysia</a> | <a href="#">Vietnam</a> | <a href="#">Philippines</a> | 
+                    <a href="#">Brazil</a> | <a href="#">Mexico</a> | <a href="#">Colombia</a> | 
+                    <a href="#">Chile</a> | <a href="#">Taiwan</a>
+                </div>
+            </div>
+            <div class="footer-middle">
+                <div class="policy-links">
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Terms of Service</a> | 
+                    <a href="#">Shipping Policy</a> | 
+                    <a href="#">Return and Refund Policy</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Address: Area 6, An Binh Ward, Ninh Kieu District, Can Tho City, Can Tho 920000, Can Tho.</p>
+                <p>Support Hotline: 0947791848 - Email: <a href="mailto:KhanhLNCE181093@fpt.edu.vn">KhanhLNCE181093@fpt.edu.vn</a></p>
+                <p>Business Registration Number: 0106773786 issued by Group 4 SE1807 on February 10, 2024.</p>
             </div>
         </div>
     </body>

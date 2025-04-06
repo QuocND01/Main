@@ -11,15 +11,19 @@ package Model;
 public class Deliveryunits {
     private String unitID;
     private String unitName;
-    private String status;
+    private double unitFee;
+    private String unitSpeed;
+    private String unitStatus;
 
     public Deliveryunits() {
     }
 
-    public Deliveryunits(String unitID, String unitName, String status) {
+    public Deliveryunits(String unitID, String unitName, double unitFee, String unitSpeed, String unitStatus) {
         this.unitID = unitID;
         this.unitName = unitName;
-        this.status = status;
+        this.unitFee = unitFee;
+        this.unitSpeed = unitSpeed;
+        this.unitStatus = unitStatus;
     }
 
     public String getUnitID() {
@@ -38,17 +42,33 @@ public class Deliveryunits {
         this.unitName = unitName;
     }
 
-    public String getStatus() {
-        return status;
+    public double getUnitFee() {
+        return unitFee;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUnitFee(double unitFee) {
+        this.unitFee = unitFee;
+    }
+
+    public String getUnitSpeed() {
+        return unitSpeed;
+    }
+
+    public void setUnitSpeed(String unitSpeed) {
+        this.unitSpeed = unitSpeed;
+    }
+
+    public String getUnitStatus() {
+        return unitStatus;
+    }
+
+    public void setUnitStatus(String unitStatus) {
+        this.unitStatus = unitStatus;
     }
 
     @Override
     public String toString() {
-        return "Deliveryunits{" + "unitID=" + unitID + ", unitName=" + unitName + ", status=" + status + '}';
+        return "Deliveryunits{" + "unitID=" + unitID + ", unitName=" + unitName + ", unitFee=" + unitFee + ", unitSpeed=" + unitSpeed + ", unitStatus=" + unitStatus + '}';
     }
 
     

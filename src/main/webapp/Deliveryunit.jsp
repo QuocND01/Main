@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Deliveryunits"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,6 +10,72 @@
         <title>Manage Delivery Units</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <style>
+            body {
+                min-height: 100vh;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f7fc;
+                margin-left: 226px;
+                margin-top: 10px;
+                padding: 20px;
+                color: #555;
+            }
+
+            .main{
+                padding-top: 100px;
+                padding-left: 20px;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 250px;
+                width: calc(100% - 250px);
+                height: 110px;
+                background: #e91e63;
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 20px;
+                z-index: 1000;
+            }
+            .sidebar {
+
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100vh;
+                background: #343a40;
+                padding-top: 20px;
+
+            }
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                height: 44px;
+            }
+            .sidebar a:hover {
+                background: #495057;
+            }
+            .content {
+                color: white;
+                padding: 20px;
+                flex: 1;
+                color: white;
+            }
+
+            .logo img {
+                width: 70px;
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .logo a {
+                height: 90px;
+            }
             :root {
                 --primary: #e91e63;
                 --secondary: #4361ee;
@@ -30,16 +97,8 @@
                 font-family: 'Segoe UI', Arial, sans-serif;
             }
 
-            body {
-                background-color: #f0f2f5;
-                color: var(--dark);
-                line-height: 1.6;
-                padding: 20px;
-            }
-
             .container {
-                max-width: 1200px;
-                margin: 0 auto;
+                max-width: 1600px;
                 background-color: white;
                 border-radius: var(--border-radius);
                 box-shadow: var(--box-shadow);
@@ -47,10 +106,7 @@
             }
 
             h1 {
-                color: var(--primary);
-                margin-bottom: 25px;
                 padding-bottom: 15px;
-                border-bottom: 2px solid #eee;
                 text-align: center;
                 font-weight: 600;
             }
@@ -354,109 +410,229 @@
                     padding: 8px 16px;
                 }
             }
+            /* Footer */
+            .footer {
+                background-color: #f8f8f8;
+                padding: 20px 0;
+                font-size: 14px;
+                color: #666;
+                text-align: center;
+                border-top: 1px solid #e0e0e0;
+                margin-top:200px;
+            }
+
+            .footer-top {
+                margin-bottom: 10px;
+            }
+
+            .footer-top p {
+                color: #888;
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .country-links a {
+                color: #007bff;
+                margin: 0 5px;
+                text-decoration: none;
+                font-size: 12px;
+            }
+
+            .country-links a:hover {
+                text-decoration: underline;
+            }
+
+            .footer-middle {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .policy-links a {
+                color: #007bff;
+                margin: 0 10px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .policy-links a:hover {
+                text-decoration: underline;
+            }
+
+            .registration-icons img {
+                height: 40px;
+                margin: 0 10px;
+            }
+
+            .footer-bottom {
+                color: #888;
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .footer-bottom a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+            .footer-bottom a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
-        <div class="container">
+        <c:set var="role" value="${sessionScope.role}" />
+        <div class="sidebar" id="mySidebar">
             <div class="logo">
-                <a href="/viewBookAdminController">
-                    <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
+                <a href="viewBookAdminController">
+                    <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo" height="40">
                 </a>
-                <h1><i class="fas fa-truck"></i> Delivery Units Management</h1>
+            </div>
+            <a href="view-new-order">Manage Orders</a>
+            <a href="ManageCustomersController">Manage Customers</a>
+            <a href="VoucherController">Manage Vouchers</a>
+            <c:if test="${role == 'Admin'}">
+                <a href="DeliveryunitController">Manage Delivery Units</a>
+            </c:if>
+            <a href="viewCategory">Manage Categories</a>
+            <a href="WarehouseController">Manage Warehouse</a>
+            <a href="AuthorController">Manage Authors</a>
+            <c:if test="${role == 'Admin'}">
+                <a href="viewstaff">Manage Staff</a>
+            </c:if>
+
+            <a href="logout" class="btn btn-danger w-100" 
+               style="background-color: #e91e63;
+               color: white;
+               font-size: 16px;
+               text-align: center;
+               border-radius: 12px;"
+               onmouseover="this.style.backgroundColor = '#495057'" 
+               onmouseout="this.style.backgroundColor = '#e91e63'">
+                Logout
+            </a>
+
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+
+            <div class="content">
+                <h1><i class="fas fa-truck"></i> Delivery Units Management</h1>       
             </div>
 
-            <% if (request.getAttribute("message") != null) {%>
-            <div class="alert alert-success" id="serverMessage">
-                <i class="fas fa-check-circle"></i> <%= request.getAttribute("message")%>
-                <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
-            </div>
-            <script>
-                // Auto-hide the server message after 5 seconds
-                setTimeout(function () {
-                    var message = document.getElementById('serverMessage');
-                    if (message) {
-                        message.style.opacity = '0';
-                        setTimeout(function () {
-                            message.remove();
-                        }, 300);
-                    }
-                }, 5000);
-            </script>
-            <% } %>
+        </div>
+        <div class="main">
+            <div class="container">
 
-            <% if (request.getAttribute("error") != null) {%>
-            <div class="alert alert-error" id="serverError">
-                <i class="fas fa-exclamation-circle"></i> <%= request.getAttribute("error")%>
-                <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
-            </div>
-            <script>
-                // Auto-hide the server error after 5 seconds
-                setTimeout(function () {
-                    var error = document.getElementById('serverError');
-                    if (error) {
-                        error.style.opacity = '0';
-                        setTimeout(function () {
-                            error.remove();
-                        }, 300);
-                    }
-                }, 5000);
-            </script>
-            <% } %>
 
-            <div class="actions">
-                <button class="btn btn-primary" onclick="showPopup('add')">
-                    <i class="fas fa-plus"></i> Add Delivery Unit
-                </button>
-            </div>
+                <% if (request.getAttribute("message") != null) {%>
+                <div class="alert alert-success" id="serverMessage">
+                    <i class="fas fa-check-circle"></i> <%= request.getAttribute("message")%>
+                    <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
+                </div>
+                <script>
+                    setTimeout(function () {
+                        var message = document.getElementById('serverMessage');
+                        if (message) {
+                            message.style.opacity = '0';
+                            setTimeout(function () {
+                                message.remove();
+                            }, 300);
+                        }
+                    }, 5000);
+                </script>
+                <% } %>
 
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Unit ID</th>
-                            <th>Unit Name</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            ArrayList<Deliveryunits> unitList = (ArrayList<Deliveryunits>) request.getAttribute("unitList");
-                            for (Deliveryunits unit : unitList) {
-                        %>
-                        <tr>
-                            <td><%= unit.getUnitID()%></td>
-                            <td><strong><%= unit.getUnitName()%></strong></td>
-                            <td>
-                                <span class="status-badge status-<%= unit.getStatus().toLowerCase()%>">
-                                    <%= unit.getStatus()%>
-                                </span>
-                            </td>
-                            <td>
-                                <% if ("Active".equals(unit.getStatus())) {%>
-                                <button class="btn btn-primary" onclick="showPopup('update', '<%= unit.getUnitID()%>', '<%= unit.getUnitName()%>')">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-danger" onclick="showChangeStatusConfirmation('<%= unit.getUnitID()%>', '<%= unit.getUnitName()%>')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                                <% } else { %>
-                                <button class="btn btn-secondary" disabled>
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-secondary" disabled>
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                                <% } %>
-                            </td>
-                        </tr>
-                        <% }%>
-                    </tbody>
-                </table>
+                <% if (request.getAttribute("error") != null) {%>
+                <div class="alert alert-error" id="serverError">
+                    <i class="fas fa-exclamation-circle"></i> <%= request.getAttribute("error")%>
+                    <span class="alert-close" onclick="this.parentElement.remove()">&times;</span>
+                </div>
+                <script>
+                    setTimeout(function () {
+                        var error = document.getElementById('serverError');
+                        if (error) {
+                            error.style.opacity = '0';
+                            setTimeout(function () {
+                                error.remove();
+                            }, 300);
+                        }
+                    }, 5000);
+                </script>
+                <% } %>
+
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="showPopup('add')">
+                        <i class="fas fa-plus"></i> Add Delivery Unit
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Unit ID</th>
+                                <th>Unit Name</th>
+                                <th>Unit Fee</th>
+                                <th>Unit Speed</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                ArrayList<Deliveryunits> unitList = (ArrayList<Deliveryunits>) request.getAttribute("unitList");
+                                for (Deliveryunits unit : unitList) {
+                            %>
+                            <tr>
+                                <td><%= unit.getUnitID()%></td>
+                                <td><strong><%= unit.getUnitName()%></strong></td>
+                                <td>$<%= String.format("%.2f", unit.getUnitFee())%></td>
+                                <td><%= unit.getUnitSpeed()%></td>
+                                <td>
+                                    <% if ("Active".equals(unit.getUnitStatus())) {%>
+                                    <button class="btn btn-primary" onclick="showPopup('update', '<%= unit.getUnitID()%>', '<%= unit.getUnitName()%>', <%= unit.getUnitFee()%>, '<%= unit.getUnitSpeed()%>')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-danger" onclick="showChangeStatusConfirmation('<%= unit.getUnitID()%>', '<%= unit.getUnitName()%>')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                    <% } else { %>
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                    <% } %>
+                                </td>
+                            </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!-- Add/Update Popup -->
+
+        <!-- Status Change Confirmation Popup -->
+        <div id="status-change-overlay" class="popup-overlay">
+            <div class="popup delete-popup">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h2>Confirm Status Change</h2>
+                <p id="status-change-message">Are you sure you want to deactivate this delivery unit?</p>
+
+                <div class="delete-buttons">
+                    <button type="button" class="btn btn-danger" id="confirm-status-change-btn">
+                        <i class="fas fa-toggle-off"></i> Delete
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="hidePopup('status-change-overlay')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
         <div id="popup-overlay" class="popup-overlay">
             <div class="popup">
                 <h2 id="popup-title"><i class="fas fa-plus-circle"></i> Add Delivery Unit</h2>
@@ -466,13 +642,23 @@
 
                     <div class="form-group">
                         <label for="unitName">Unit Name:</label>
-                        <input type="text" id="unitName" name="unitName" placeholder="Enter delivery unit name" required>
+                        <input type="text" id="unitName" name="unitName" placeholder="Enter delivery unit name (letters and numbers only)" required>
                     </div>
 
-                    <div id="errorMessage"></div>
+                    <div class="form-group">
+                        <label for="unitFee">Unit Fee ($):</label>
+                        <input type="number" id="unitFee" name="unitFee" step="0.01" min="0.01" placeholder="Enter unit fee (greater than 0)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unitSpeed">Unit Speed:</label>
+                        <!-- This input will be replaced by JavaScript with a select element -->
+                        <input type="text" id="unitSpeed" name="unitSpeed" placeholder="Enter unit speed" required>
+                    </div>
+
+                    <div id="errorMessage" style="display: none; color: red; margin-bottom: 10px;"></div>
 
                     <div class="form-buttons">
-                        <!-- Buttons order: Save first, then Cancel -->
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Save
                         </button>
@@ -484,24 +670,6 @@
             </div>
         </div>
 
-        <!-- Status Change Confirmation Popup -->
-        <div id="status-change-overlay" class="popup-overlay">
-            <div class="popup delete-popup">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h2>Confirm Status Change</h2>
-                <p id="status-change-message">Are you sure you want to deactivate this delivery unit?</p>
-
-                <div class="delete-buttons">
-                    <button type="button" class="btn btn-danger" id="confirm-status-change-btn">
-                        <i class="fas fa-toggle-off"></i> Deactivate
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="hidePopup('status-change-overlay')">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Hidden form for status change action -->
         <form id="statusChangeForm" action="DeliveryunitController" method="post" style="display: none;">
             <input type="hidden" name="action" value="delete">
@@ -509,11 +677,23 @@
         </form>
 
         <script>
-            function showPopup(action, unitID = '', unitName = '') {
+            function showPopup(action, unitID = '', unitName = '', unitFee = '', unitSpeed = '') {
                 document.getElementById('popup-overlay').style.display = 'block';
                 document.getElementById('action').value = action;
                 document.getElementById('unitID').value = unitID;
                 document.getElementById('unitName').value = unitName;
+                document.getElementById('unitFee').value = unitFee;
+
+                // Set the correct option in the dropdown
+                const unitSpeedSelect = document.getElementById('unitSpeed');
+                if (unitSpeedSelect) {
+                    for (let i = 0; i < unitSpeedSelect.options.length; i++) {
+                        if (unitSpeedSelect.options[i].value === unitSpeed) {
+                            unitSpeedSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
 
                 // Update form title and icon based on action
                 const popupTitle = document.getElementById('popup-title');
@@ -568,12 +748,10 @@
 
             // Show temporary message function
             function showTemporaryMessage(message, type) {
-                // Create the alert element
                 var alertDiv = document.createElement('div');
                 alertDiv.className = 'alert alert-' + type;
                 alertDiv.innerHTML = '<i class="fas fa-' + (type === 'success' ? 'check-circle' : 'exclamation-circle') + '"></i> ' + message;
 
-                // Add a close button
                 var closeButton = document.createElement('span');
                 closeButton.innerHTML = '&times;';
                 closeButton.className = 'alert-close';
@@ -582,20 +760,120 @@
                 };
                 alertDiv.appendChild(closeButton);
 
-                // Insert at the top of the container
                 var container = document.querySelector('.container');
                 var h1 = container.querySelector('h1');
                 h1.parentNode.insertBefore(alertDiv, h1.nextSibling);
 
-                // Auto-hide after 5 seconds
                 setTimeout(function () {
-                    // Add fade-out animation
                     alertDiv.style.opacity = '0';
                     setTimeout(function () {
                         alertDiv.remove();
-                    }, 300); // Wait for animation to complete
+                    }, 300);
                 }, 5000);
             }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get form elements
+                const unitForm = document.getElementById('unitForm');
+                const unitNameInput = document.getElementById('unitName');
+                const unitFeeInput = document.getElementById('unitFee');
+                const unitSpeedInput = document.getElementById('unitSpeed');
+                const errorMessage = document.getElementById('errorMessage');
+
+                // Replace the unit speed text input with a select dropdown
+                const unitSpeedContainer = unitSpeedInput.parentElement;
+                const unitSpeedLabel = unitSpeedContainer.querySelector('label');
+
+                // Create the select element
+                const unitSpeedSelect = document.createElement('select');
+                unitSpeedSelect.id = 'unitSpeed';
+                unitSpeedSelect.name = 'unitSpeed';
+                unitSpeedSelect.required = true;
+
+                // Add options to the select element
+                const speedOptions = ['Normal', 'Fast', 'Slow'];
+                speedOptions.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    unitSpeedSelect.appendChild(optionElement);
+                });
+
+                // Replace the text input with the select element
+                unitSpeedInput.replaceWith(unitSpeedSelect);
+
+                // Form validation
+                unitForm.addEventListener('submit', function (event) {
+                    // Reset error message
+                    errorMessage.style.display = 'none';
+                    errorMessage.textContent = '';
+
+                    let hasErrors = false;
+
+                    // Validate Unit Name (only allows letters and numbers)
+                    if (!/^[a-zA-Z0-9\s]+$/.test(unitNameInput.value.trim())) {
+                        showError('Unit Name can only contain letters and numbers');
+                        hasErrors = true;
+                    }
+
+                    // Validate Unit Fee (positive number)
+                    const feeValue = parseFloat(unitFeeInput.value);
+                    if (isNaN(feeValue) || feeValue <= 0) {
+                        showError('Unit Fee must be a number greater than 0');
+                        hasErrors = true;
+                    }
+
+                    // If there are errors, prevent form submission
+                    if (hasErrors) {
+                        event.preventDefault();
+                    }
+                });
+
+                // Function to show error message
+                function showError(message) {
+                    errorMessage.textContent = message;
+                    errorMessage.style.display = 'block';
+                    errorMessage.style.color = 'red';
+                    errorMessage.style.marginBottom = '10px';
+                }
+
+                // When updating, set the correct option in the dropdown
+                if (document.getElementById('action').value === 'update') {
+                    const currentSpeed = unitSpeedSelect.getAttribute('data-current-speed');
+                    if (currentSpeed) {
+                        for (let i = 0; i < unitSpeedSelect.options.length; i++) {
+                            if (unitSpeedSelect.options[i].value === currentSpeed) {
+                                unitSpeedSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         </script>
     </body>
+    <div class="footer">
+        <div class="footer-top">
+            <p>© 2024 FPT Book Store. All rights reserved.</p>
+            <div class="country-links">
+                <a href="#">Singapore</a> | <a href="#">Indonesia</a> | <a href="#">Thailand</a> | 
+                <a href="#">Malaysia</a> | <a href="#">Vietnam</a> | <a href="#">Philippines</a> | 
+                <a href="#">Brazil</a> | <a href="#">Mexico</a> | <a href="#">Colombia</a> | 
+                <a href="#">Chile</a> | <a href="#">Taiwan</a>
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="policy-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Shipping Policy</a> | 
+                <a href="#">Return and Refund Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Address: Area 6, An Binh Ward, Ninh Kieu District, Can Tho City, Can Tho 920000, Can Tho.</p>
+            <p>Support Hotline: 0947791848 - Email: <a href="mailto:KhanhLNCE181093@fpt.edu.vn">KhanhLNCE181093@fpt.edu.vn</a></p>
+            <p>Business Registration Number: 0106773786 issued by Group 4 SE1807 on February 10, 2024.</p>
+        </div>
+    </div>
 </html>

@@ -13,7 +13,7 @@ public class CartDAO extends DBContext {
     public ArrayList<Cart> getCartByCustomer(String customerID) {
         ArrayList<Cart> cartList = new ArrayList<>();
         String sql = "SELECT * FROM Cart WHERE CustomerID = ? ORDER BY CAST(SUBSTRING(CartID, 3, LEN(CartID) - 2) AS INT) DESC";
-        try (PreparedStatement st = connection.prepareStatement(sql)) {
+        try ( PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, customerID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -21,7 +21,7 @@ public class CartDAO extends DBContext {
                         rs.getString("CartID"),
                         rs.getString("CustomerID"),
                         rs.getString("BookID"),
-                        rs.getInt("Quantity")
+                        rs.getInt("CartBookQuantity")
                 );
                 cartList.add(cart);
             }
@@ -35,9 +35,9 @@ public class CartDAO extends DBContext {
     // Thêm sách vào giỏ hàng
     public void addToCart(String customerID, String bookID) {
         String sqlGetMaxID = "SELECT MAX(CAST(SUBSTRING(CartID, 3, LEN(CartID) - 2) AS INT)) FROM Cart";
-        String sqlInsert = "INSERT INTO Cart (CartID, CustomerID, BookID, Quantity) VALUES (?, ?, ?, 1)";
-        String sqlCheck = "SELECT Quantity FROM Cart WHERE CustomerID = ? AND BookID = ?";
-        String sqlUpdate = "UPDATE Cart SET Quantity = Quantity + 1 WHERE CustomerID = ? AND BookID = ?";
+        String sqlInsert = "INSERT INTO Cart (CartID, CustomerID, BookID, CartBookQuantity) VALUES (?, ?, ?, 1)";
+        String sqlCheck = "SELECT CartBookQuantity FROM Cart WHERE CustomerID = ? AND BookID = ?";
+        String sqlUpdate = "UPDATE Cart SET CartBookQuantity = CartBookQuantity + 1 WHERE CustomerID = ? AND BookID = ?";
 
         try {
             connection.setAutoCommit(false);
@@ -97,7 +97,7 @@ public class CartDAO extends DBContext {
         if (quantity <= 0) {
             removeFromCart(customerID, bookID);
         } else {
-            String sql = "UPDATE Cart SET Quantity = ? WHERE CustomerID = ? AND BookID = ?";
+            String sql = "UPDATE Cart SET CartBookQuantity = ? WHERE CustomerID = ? AND BookID = ?";
             try ( PreparedStatement st = connection.prepareStatement(sql)) {
                 st.setInt(1, quantity);
                 st.setString(2, customerID);

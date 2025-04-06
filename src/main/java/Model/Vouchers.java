@@ -9,20 +9,19 @@ package Model;
  * @author QuocNHMCE182015
  */
 public class Vouchers {
-    
     private String voucherID;
-    private String voucher;
-    private int value;
-    private String status;
+    private String voucherName;
+    private int voucherValue;
+    private String voucherStatus;
 
     public Vouchers() {
     }
 
-    public Vouchers(String voucherID, String voucher, int value, String status) {
+    public Vouchers(String voucherID, String voucherName, int voucherValue, String voucherStatus) {
         this.voucherID = voucherID;
-        this.voucher = voucher;
-        this.value = value;
-        this.status = status;
+        this.voucherName = voucherName;
+        this.voucherValue = voucherValue;
+        this.voucherStatus = voucherStatus;
     }
 
     public String getVoucherID() {
@@ -33,33 +32,33 @@ public class Vouchers {
         this.voucherID = voucherID;
     }
 
-    public String getVoucher() {
-        return voucher;
+    public String getVoucherName() {
+        return voucherName;
     }
 
-    public void setVoucher(String voucher) {
-        this.voucher = voucher;
+    public void setVoucherName(String voucherName) {
+        this.voucherName = voucherName;
     }
 
-    public int getValue() {
-        return value;
+    public int getVoucherValue() {
+        return voucherValue;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setVoucherValue(int voucherValue) {
+        this.voucherValue = voucherValue;
     }
 
-    public String getStatus() {
-        return status;
+    public String getVoucherStatus() {
+        return voucherStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setVoucherStatus(String voucherStatus) {
+        this.voucherStatus = voucherStatus;
     }
 
     @Override
     public String toString() {
-        return "Vouchers{" + "voucherID=" + voucherID + ", voucher=" + voucher + ", value=" + value + ", status=" + status + '}';
+        return "Vouchers{" + "voucherID=" + voucherID + ", voucherName=" + voucherName + ", voucherValue=" + voucherValue + ", voucherStatus=" + voucherStatus + '}';
     }
-    
+
 }

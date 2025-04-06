@@ -8,24 +8,20 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-/**
- *
- * @author QuocNHMCE182015
- */
 public class VoucherDAO extends DBContext {
 
     // Lấy danh sách tất cả voucher theo thứ tự tăng dần
     public ArrayList<Vouchers> getAllVouchers() {
         ArrayList<Vouchers> voucherList = new ArrayList<>();
-        String sql = "SELECT * FROM Vouchers ORDER BY CAST(SUBSTRING(voucherID, 2, LEN(voucherID)) AS INT) ASC";
+        String sql = "SELECT * FROM Vouchers WHERE voucherStatus = 'Active' ORDER BY CAST(SUBSTRING(voucherID, 2, LEN(voucherID)) AS INT) DESC";
 
         try ( PreparedStatement st = connection.prepareStatement(sql);  ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 Vouchers voucher = new Vouchers(
                         rs.getString("voucherID"),
-                        rs.getString("voucher"),
-                        rs.getInt("value"),
-                        rs.getString("status")
+                        rs.getString("voucherName"),
+                        rs.getInt("voucherValue"),
+                        rs.getString("voucherStatus")
                 );
                 voucherList.add(voucher);
             }
@@ -44,9 +40,9 @@ public class VoucherDAO extends DBContext {
             if (rs.next()) {
                 return new Vouchers(
                         rs.getString("voucherID"),
-                        rs.getString("voucher"),
-                        rs.getInt("value"),
-                        rs.getString("status")
+                        rs.getString("voucherName"),
+                        rs.getInt("voucherValue"),
+                        rs.getString("voucherStatus")
                 );
             }
         } catch (SQLException e) {
@@ -57,16 +53,16 @@ public class VoucherDAO extends DBContext {
 
     // Kiểm tra mã voucher hợp lệ
     public Vouchers getVoucherByCode(String code) {
-        String sql = "SELECT * FROM Vouchers WHERE voucher = ? AND status = 'Active'";
+        String sql = "SELECT * FROM Vouchers WHERE voucherName = ? AND voucherStatus = 'Active'";
         try ( PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, code);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return new Vouchers(
                         rs.getString("voucherID"),
-                        rs.getString("voucher"),
-                        rs.getInt("value"),
-                        rs.getString("status")
+                        rs.getString("voucherName"),
+                        rs.getInt("voucherValue"),
+                        rs.getString("voucherStatus")
                 );
             }
         } catch (SQLException e) {
@@ -78,7 +74,7 @@ public class VoucherDAO extends DBContext {
     // Thêm voucher mới
     public void addVoucher(Vouchers voucher) {
         String sqlGetMaxID = "SELECT MAX(CAST(SUBSTRING(voucherID, 2, LEN(voucherID)) AS INT)) FROM Vouchers";
-        String sqlInsert = "INSERT INTO Vouchers (voucherID, voucher, value, status) VALUES (?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO Vouchers (voucherID, voucherName, voucherValue, voucherStatus) VALUES (?, ?, ?, ?)";
 
         int maxID = 0;
 
@@ -94,9 +90,9 @@ public class VoucherDAO extends DBContext {
 
         try ( PreparedStatement st2 = connection.prepareStatement(sqlInsert)) {
             st2.setString(1, newVoucherID);
-            st2.setString(2, voucher.getVoucher());
-            st2.setInt(3, voucher.getValue());
-            st2.setString(4, voucher.getStatus());
+            st2.setString(2, voucher.getVoucherName());
+            st2.setInt(3, voucher.getVoucherValue());
+            st2.setString(4, voucher.getVoucherStatus());
             st2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,7 +119,7 @@ public class VoucherDAO extends DBContext {
 
     // Thay đổi trạng thái voucher thành Inactive thay vì xóa
     public boolean updateVoucherStatus(String voucherID, String newStatus) {
-        String sql = "UPDATE Vouchers SET status = ? WHERE voucherID = ?";
+        String sql = "UPDATE Vouchers SET voucherStatus = ? WHERE voucherID = ?";
 
         try ( PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, newStatus);
@@ -163,16 +159,15 @@ public class VoucherDAO extends DBContext {
         }
     }
 
-    // Kiểm tra xem voucher đã tồn tại hay chưa
+    // Kiểm tra xem voucher đã tồn tại hay chưa - CHỈ KIỂM TRA VOUCHER ACTIVE
     public boolean isVoucherExists(String voucherName) {
-        String sql = "SELECT COUNT(*) FROM Vouchers WHERE voucher = ?";
+        String sql = "SELECT COUNT(*) FROM Vouchers WHERE voucherName = ? AND voucherStatus = 'Active'";
         try ( PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, voucherName);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                System.out.println("🔍 Kiểm tra voucher: " + voucherName + " | Kết quả: " + count);
-                return rs.getInt(1) > 0; // Nếu COUNT > 0, tức là đã tồn tại
+                return count > 0; // Chỉ trả về true nếu có voucher ACTIVE trùng tên
             }
         } catch (SQLException e) {
             e.printStackTrace();

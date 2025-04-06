@@ -1,21 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="Model.Cart"%>
-<%@page import="DAO.CartDAO"%>
-<%@page import="DAO.BookDAO"%>
-<%@page import="Model.Books"%>
-
-<%
-    String customerID = (String) session.getAttribute("customerID");
-    if (customerID == null) {
-        response.sendRedirect("LoginForm.jsp");
-        return;
-    }
-
-    CartDAO cartDAO = new CartDAO();
-    BookDAO bookDAO = new BookDAO();
-    ArrayList<Cart> cartList = cartDAO.getCartByCustomer(customerID);
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -46,20 +31,139 @@
                 font-family: 'Segoe UI', Arial, sans-serif;
             }
 
+            /* Header */
+            .header {
+                background-image: url('<c:url value="/img/header_img2.jpg"/>');
+                background-size: cover;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                padding: 5px 15px;
+                height: 75px; /* Fixed height as requested */
+                display: flex;
+                align-items: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .logo{
+                height: 75px;
+                width: 75px;
+            }
+            .logo img {
+                height: 100%;
+                width: 100%;
+            }
+            .logsign {
+                margin-left: auto;
+                display: flex;
+                gap: 20px;
+            }
+
+            .logsign a {
+                padding: 8px 16px;
+                font-size: 20px;
+                font-weight: bold;
+                font-weight: 900;
+                color: #77CCFF;
+                border-radius: 5px;
+                transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            }
+
+            .logsign a:hover {
+                background-color: #ff1493;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 15px rgba(255, 20, 147, 0.4);
+            }
+
+            /* User dropdown menu */
+            .user-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .user-dropdown-content {
+                display: none;
+                position: absolute;
+                right: 0;
+                background-color: #f9f9f9;
+                min-width: 180px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 5px;
+            }
+
+            .user-dropdown-content a {
+                display: block;
+                padding: 8px 16px;
+                font-size: 20px;
+                font-weight: bold;
+                font-weight: 900;
+                color: #77CCFF;
+                border-radius: 5px;
+                transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+                text-decoration: none;
+            }
+
+            .user-dropdown-content a:hover {
+                background-color: #ff1493;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 15px rgba(255, 20, 147, 0.4);
+            }
+
+            .user-dropdown:hover .user-dropdown-content {
+                display: block;
+            }
+
+            .user-icon {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+            }
+
+            .user-icon i {
+                font-size: 20px;
+            }
+
+            .user-icon a::after {
+                content: attr(title);
+                position: absolute;
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 5px 10px;
+                background-color: #333;
+                color: white;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s, visibility 0.3s;
+            }
+
+            .user-icon a:hover::after {
+                opacity: 1;
+                visibility: visible;
+            }
+
             body {
+                padding-top: 75px;
                 background-color: #f0f2f5;
                 color: var(--dark);
                 line-height: 1.6;
-                padding: 20px;
             }
 
             .container {
                 max-width: 1200px;
                 margin: 0 auto;
-                background-color: white;
+                background-color: #F5F5F5;
                 border-radius: var(--border-radius);
                 box-shadow: var(--box-shadow);
-                padding: 25px;
+                padding: 15px 25px 25px 25px;
                 position: relative;
             }
 
@@ -73,15 +177,6 @@
 
             h1 {
                 text-align: center;
-            }
-
-            .logo {
-                text-align: left;
-                margin-bottom: 20px;
-            }
-
-            .logo img {
-                max-height: 60px;
             }
 
             .empty-cart {
@@ -105,12 +200,12 @@
             .cart-summary-container {
                 flex: 1;
                 position: sticky;
-                top: 20px;
+                top: 75px;
                 align-self: flex-start;
             }
 
             .cart-summary {
-                background-color: white;
+                background-color: #F5F5F5;
                 padding: 20px;
                 border-radius: var(--border-radius);
                 box-shadow: var(--box-shadow);
@@ -442,95 +537,123 @@
         </style>
     </head>
     <body>
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">
+                <a href="ViewBookCustomerController">
+                    <img src="<c:url value='/img/logo3.png'/>" alt="FPT Logo">
+                </a>
+            </div>
+            <form method="post" class="logsign">
+                <div class="user-dropdown">
+                    <div class="user-icon">
+                        <a href="CartController" title="Your Cart"><i class="fas fa-shopping-cart"></i></a>
+                    </div>
+                </div>
+                <!-- Orders Dropdown -->
+                <div class="user-dropdown">
+                    <div class="user-icon">
+                        <a href="OrderController" title="Your Order"><i class="fas fa-box"></i></a>
+                    </div>
+                </div>
+
+                <!-- User Account Dropdown (unchanged) -->
+                <div class="user-dropdown">
+                    <div class="user-icon">
+                        <a href="#"><i class="fas fa-user-circle"></i></a>
+                    </div>
+                    <div class="user-dropdown-content">
+                        <a href="ProfileController">My Account</a>
+                        <a href="logout">Logout</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="container">
             <h1><i class="fas fa-shopping-cart"></i> Your Shopping Cart</h1>
 
+            <c:if test="${empty cartList}">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart" style="font-size: 48px; margin-bottom: 15px; color: var(--gray);"></i>
+                    <p>Your cart is empty!</p>
+                    <a href="ViewBookCustomerController" class="btn create-order" style="max-width: 200px; margin: 20px auto; display: block;">
+                        <i class="fas fa-book"></i> Shopping Books
+                    </a>
+                </div>
+            </c:if>
 
-            <% if (cartList == null || cartList.isEmpty()) { %>
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart" style="font-size: 48px; margin-bottom: 15px; color: var(--gray);"></i>
-                <p>Your cart is empty!</p>
-                <a href="ViewBookCustomerController" class="btn create-order" style="max-width: 200px; margin: 20px auto; display: block;">
-                    <i class="fas fa-book"></i> Browse Books
-                </a>
-            </div>
-            <% } else { %>
-            <div class="cart-container">
-                <!-- Cart items table (left) -->
-                <div class="cart-items">
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Book Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th class="hidden">Total</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    double totalPrice = 0;
-                                    for (Cart cart : cartList) {
-                                        Books book = bookDAO.getBookByBookID(cart.getBookID());
-                                        double totalItemPrice = Double.parseDouble(book.getPrice()) * cart.getQuantity();
-                                        totalPrice += totalItemPrice;
-                                %>
-                                <tr>
-                                    <td><img src="<%= book.getImage()%>" alt="Book Image" width="50" height="75"></td>
-                                    <td>
-                                        <a href="viewBookDetailCustomerController?bookId=<%= book.getBookID()%>" 
-                                           style="text-decoration: none; color: var(--primary); font-weight: 500;">
-                                            <%= book.getBookName()%>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="quantity-container">
-                                            <button onclick="updateQuantity('<%= cart.getBookID()%>', -1, '<%= book.getPrice()%>')">-</button>
-                                            <input type="number" id="quantity_<%= cart.getBookID()%>" value="<%= cart.getQuantity()%>" min="1" max="<%= book.getQuantity()%>" readonly>
-                                            <button onclick="updateQuantity('<%= cart.getBookID()%>', 1, '<%= book.getPrice()%>')">+</button>
-                                        </div>
-                                    </td>
-                                    <td><%= book.getPrice()%> $</td>
-                                    <td class="hidden">
-                                        <span id="total_<%= cart.getBookID()%>"><%= String.format("%.2f", totalItemPrice)%></span> $
-                                    </td>
-                                    <td>
-                                        <button onclick="confirmDelete('<%= cart.getBookID()%>')">
-                                            <i class="fas fa-trash"></i> Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                                <% }
-                                    session.setAttribute("totalPrice", totalPrice);
-                                %>
-                            </tbody>
-                        </table>
+            <c:if test="${not empty cartList}">
+                <div class="cart-container">
+                    <!-- Cart items table (left) -->
+                    <div class="cart-items">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Book Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th class="hidden">Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="cart" items="${cartList}" varStatus="status">
+                                        <c:set var="book" value="${bookDetailsList[status.index]}" />
+                                        <c:set var="totalItemPrice" value="${book.bookPrice * cart.cartBookQuantity}" />
+                                        <tr>
+                                            <td><img src="${book.image}" alt="Book Image" width="50" height="75"></td>
+                                            <td>
+                                                <a href="viewBookDetailCustomerController?BookID=${book.bookID}" 
+                                                   style="text-decoration: none; color: var(--primary); font-weight: 500;">
+                                                    ${book.bookName}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <div class="quantity-container">
+                                                    <button onclick="updateQuantity('${cart.bookID}', -1, '${book.bookPrice}')">-</button>
+                                                    <input type="number" id="quantity_${cart.bookID}" value="${cart.cartBookQuantity}" min="1" max="${book.bookQuantity}" readonly>
+                                                    <button onclick="updateQuantity('${cart.bookID}', 1, '${book.bookPrice}')">+</button>
+                                                </div>
+                                            </td>
+                                            <td>${book.bookPrice} $</td>
+                                            <td class="hidden">
+                                                <span id="total_${cart.bookID}"><fmt:formatNumber value="${totalItemPrice}" pattern="0.00" /></span> $
+                                            </td>
+                                            <td>
+                                                <button onclick="confirmDelete('${cart.bookID}')">
+                                                    <i class="fas fa-trash"></i> Remove
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Cart summary and actions (right) -->
+                    <div class="cart-summary-container">
+                        <div class="cart-summary">
+                            <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Order Summary</h2>
+                            <p class="total">Total Price: <fmt:formatNumber value="${totalPrice}" pattern="0.00" /> $</p>
+                            <button class="btn create-order" onclick="createOrder()">
+                                <i class="fas fa-check-circle"></i> Buy Now
+                            </button>
+                        </div>
+                        <div>
+                            <button class="btn clear-cart" onclick="confirmClearCart()">
+                                <i class="fas fa-trash-alt"></i> Clear Cart
+                            </button>
+                            <a href="ViewBookCustomerController" class="btn btn-primary" style="background-color: var(--primary); color: white; margin-top: 10px; text-decoration: none;">
+                                <i class="fas fa-arrow-left"></i> Continue Shopping
+                            </a>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Cart summary and actions (right) -->
-                <div class="cart-summary-container">
-                    <div class="cart-summary">
-                        <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Order Summary</h2>
-                        <p class="total">Total Price: <%= String.format("%.2f", totalPrice)%> $</p>
-                        <button class="btn create-order" onclick="createOrder()">
-                            <i class="fas fa-check-circle"></i> Create Order
-                        </button>
-                    </div>
-                    <div>
-                        <button class="btn clear-cart" onclick="confirmClearCart()">
-                            <i class="fas fa-trash-alt"></i> Clear Cart
-                        </button>
-                        <a href="ViewBookCustomerController" class="btn btn-primary" style="background-color: var(--primary); color: white; margin-top: 10px; text-decoration: none;">
-                            <i class="fas fa-arrow-left"></i> Continue Shopping
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <% }%>
+            </c:if>
         </div>
 
         <!-- Overlay background -->

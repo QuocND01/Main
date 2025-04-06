@@ -5,16 +5,16 @@ public class Cart {
     private String cartID;
     private String customerID;
     private String bookID;
-    private int quantity;
+    private int cartBookQuantity;
 
     public Cart() {
     }
 
-    public Cart(String cartID, String customerID, String bookID, int quantity) {
+    public Cart(String cartID, String customerID, String bookID, int cartBookQuantity) {
         this.cartID = cartID;
         this.customerID = customerID;
         this.bookID = bookID;
-        this.quantity = quantity;
+        this.cartBookQuantity = cartBookQuantity;
     }
 
     public String getCartID() {
@@ -41,16 +41,17 @@ public class Cart {
         this.bookID = bookID;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getCartBookQuantity() {
+        return cartBookQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCartBookQuantity(int cartBookQuantity) {
+        this.cartBookQuantity = cartBookQuantity;
     }
 
     @Override
     public String toString() {
-        return "Cart{" + "cartID=" + cartID + ", customerID=" + customerID + ", bookID=" + bookID + ", quantity=" + quantity + '}';
+        return "Cart{" + "cartID=" + cartID + ", customerID=" + customerID + ", bookID=" + bookID + ", cartBookQuantity=" + cartBookQuantity + '}';
     }
+
 }

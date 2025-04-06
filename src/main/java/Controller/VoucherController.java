@@ -44,15 +44,6 @@ public class VoucherController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     private VoucherDAO voucherDAO;
 
     @Override
@@ -63,17 +54,22 @@ public class VoucherController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String action = request.getParameter("action");
         String message = null;
         String messageType = null;
 
-        if ("deactivate".equals(action)) {
+        // Check for post redirect first - this takes priority
+        boolean isPostRedirect = "true".equals(request.getParameter("postRedirect"));
+        if (isPostRedirect) {
+            message = "Voucher added successfully!";
+            messageType = "success";
+        } // Only process deactivation if not a post-redirect AND action is deactivate
+        else if ("deactivate".equals(action)) {
             String voucherID = request.getParameter("voucherID");
             boolean updated = voucherDAO.updateVoucherStatus(voucherID, "Inactive");
 
             if (updated) {
-                message = "Voucher deactivated successfully!";
+                message = "Voucher deleted successfully!";
                 messageType = "success";
             } else {
                 message = "Cannot deactivate voucher! An error occurred.";
@@ -92,20 +88,12 @@ public class VoucherController extends HttpServlet {
         request.getRequestDispatcher("Voucher.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String voucherName = request.getParameter("voucherName");
-        int value = Integer.parseInt(request.getParameter("value"));
-        String status = request.getParameter("status");
+        int voucherValue = Integer.parseInt(request.getParameter("value"));
+        String voucherStatus = "Active";
 
         VoucherDAO voucherDAO = new VoucherDAO();
 
@@ -113,14 +101,14 @@ public class VoucherController extends HttpServlet {
         String requestedWith = request.getHeader("X-Requested-With");
         boolean isAjax = "XMLHttpRequest".equals(requestedWith);
 
-        // Kiểm tra giá trị value trong khoảng 0 - 100
-        if (value < 0 || value > 100) {
+        // Kiểm tra giá trị value trong khoảng 1 - 100
+        if (voucherValue < 1 || voucherValue > 100) {
             if (isAjax) {
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("invalid_value");
             } else {
-                request.setAttribute("errorMessage", "Value must be between 0 and 100!");
+                request.setAttribute("errorMessage", "Value must be between 1 and 100!");
                 request.getRequestDispatcher("Voucher.jsp").forward(request, response);
             }
             return;
@@ -140,7 +128,7 @@ public class VoucherController extends HttpServlet {
         }
 
         // Nếu hợp lệ, thêm voucher mới
-        Vouchers newVoucher = new Vouchers(null, voucherName, value, status);
+        Vouchers newVoucher = new Vouchers(null, voucherName, voucherValue, voucherStatus);
         voucherDAO.addVoucher(newVoucher);
 
         if (isAjax) {
@@ -148,9 +136,8 @@ public class VoucherController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("success");
         } else {
-            request.setAttribute("message", "Voucher added successfully!");
-            request.setAttribute("messageType", "success");
-            request.getRequestDispatcher("Voucher.jsp").forward(request, response);
+            // For non-AJAX submissions, redirect to GET with a success flag
+            response.sendRedirect("VoucherController?postRedirect=true");
         }
     }
 
